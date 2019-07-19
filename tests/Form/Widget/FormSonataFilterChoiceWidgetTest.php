@@ -79,9 +79,10 @@ class FormSonataFilterChoiceWidgetTest extends BaseWidgetTest
         $mock = $this->getMockBuilder(TranslatorInterface::class)->getMock();
 
         $mock->method('trans')
-            ->willReturnCallback(static function ($arg) {
-                return $arg;
-            }
+            ->willReturnCallback(
+                static function ($arg) {
+                    return $arg;
+                }
         );
 
         $extensions = parent::getExtensions();

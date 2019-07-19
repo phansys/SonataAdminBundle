@@ -49,8 +49,8 @@ class ActiveVoterTest extends AbstractVoterTest
         $item->expects($this->any())
              ->method('getExtra')
              ->with($this->logicalOr(
-                $this->equalTo('active'),
-                $this->equalTo('sonata_admin')
+                 $this->equalTo('active'),
+                 $this->equalTo('sonata_admin')
              ))
              ->willReturnCallback(static function ($name) use ($data) {
                  if ('active' === $name) {

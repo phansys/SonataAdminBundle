@@ -64,7 +64,8 @@ class AddDependencyCallsCompilerPassTest extends TestCase
     public function testTranslatorDisabled(): void
     {
         $this->expectException(
-            \RuntimeException::class, 'The "translator" service is not yet enabled.
+            \RuntimeException::class,
+            'The "translator" service is not yet enabled.
                 It\'s required by SonataAdmin to display all labels properly.
 
                 To learn how to enable the translator service please visit:

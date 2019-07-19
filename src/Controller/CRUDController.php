@@ -463,10 +463,12 @@ class CRUDController implements ContainerAwareInterface
         // NEXT_MAJOR: Remove reflection check.
         $reflector = new \ReflectionMethod($this->admin, 'getBatchActions');
         if ($reflector->getDeclaringClass()->getName() === \get_class($this->admin)) {
-            @trigger_error('Override Sonata\AdminBundle\Admin\AbstractAdmin::getBatchActions method'
+            @trigger_error(
+                'Override Sonata\AdminBundle\Admin\AbstractAdmin::getBatchActions method'
                 .' is deprecated since version 3.2.'
                 .' Use Sonata\AdminBundle\Admin\AbstractAdmin::configureBatchActions instead.'
-                .' The method will be final in 4.0.', E_USER_DEPRECATED
+                .' The method will be final in 4.0.',
+                E_USER_DEPRECATED
             );
         }
         $batchActions = $this->admin->getBatchActions();
@@ -1562,7 +1564,8 @@ class CRUDController implements ContainerAwareInterface
 
         if ($parentAdmin->getObject($parentId) !== $propertyAccessor->getValue($object, $propertyPath)) {
             // NEXT_MAJOR: make this exception
-            @trigger_error("Accessing a child that isn't connected to a given parent is deprecated since 3.34"
+            @trigger_error(
+                "Accessing a child that isn't connected to a given parent is deprecated since 3.34"
                 ." and won't be allowed in 4.0.",
                 E_USER_DEPRECATED
             );

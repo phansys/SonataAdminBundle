@@ -82,8 +82,8 @@ class AdminVoterTest extends AbstractVoterTest
         $item->expects($this->any())
              ->method('getExtra')
              ->with($this->logicalOr(
-                $this->equalTo('admin'),
-                $this->equalTo('route')
+                 $this->equalTo('admin'),
+                 $this->equalTo('route')
              ))
              ->willReturn($data)
         ;
