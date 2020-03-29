@@ -1,0 +1,11 @@
+services:
+    Rector\TypeDeclaration\Rector\FunctionLike\ReturnTypeDeclarationRector: ~
+    Rector\TypeDeclaration\Rector\FunctionLike\ParamTypeDeclarationRector: ~
+
+parameters:
+    autoload_paths:
+        - 'vendor/autoload.php'
+        - 'vendor/bin/.phpunit/phpunit-8.5.0-0/vendor/autoload.php'
+    exclude_paths:
+        - 'src/Admin/AdminInterface.php'
+        - 'tests/DependencyInjection/Compiler/ExtensionCompilerPassTest.php'
