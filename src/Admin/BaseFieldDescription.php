@@ -356,8 +356,6 @@ abstract class BaseFieldDescription implements FieldDescriptionInterface
 
     /**
      * Defines the help message.
-     *
-     * @param string $help
      */
     public function setHelp(string $help): void
     {
@@ -369,7 +367,7 @@ abstract class BaseFieldDescription implements FieldDescriptionInterface
         return $this->help;
     }
 
-    public function getLabel(): string
+    public function getLabel(): ?string
     {
         return $this->getOption('label');
     }

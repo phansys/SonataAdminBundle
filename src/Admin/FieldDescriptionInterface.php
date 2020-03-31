@@ -45,7 +45,6 @@ interface FieldDescriptionInterface
     /**
      * Return the value represented by the provided name.
      *
-     * @param string     $name
      * @param mixed|null $default
      *
      * @return mixed the value represented by the provided name
@@ -55,7 +54,6 @@ interface FieldDescriptionInterface
     /**
      * Define an option, an option is has a name and a value.
      *
-     * @param string $name
      * @param mixed  $value
      */
     public function setOption(string $name, $value);
@@ -78,8 +76,6 @@ interface FieldDescriptionInterface
 
     /**
      * return the template used to render the field.
-     *
-     * @param string $template
      */
     public function setTemplate(string $template);
 
@@ -93,8 +89,6 @@ interface FieldDescriptionInterface
     /**
      * return the field type, the type is a mandatory field as it used to select the correct template
      * or the logic associated to the current FieldDescription object.
-     *
-     * @param string $type
      */
     public function setType(string $type);
 
@@ -112,15 +106,11 @@ interface FieldDescriptionInterface
 
     /**
      * return the parent Admin (only used in nested admin).
-     *
-     * @return AdminInterface|null
      */
-    public function getParent(): ?\Sonata\AdminBundle\Admin\AdminInterface;
+    public function getParent(): ?AdminInterface;
 
     /**
      * Define the association mapping definition.
-     *
-     * @param array $associationMapping
      */
     public function setAssociationMapping(array $associationMapping);
 
@@ -220,22 +210,16 @@ interface FieldDescriptionInterface
 
     /**
      * return the label to use for the current field.
-     *
-     * @return string
      */
-    public function getLabel(): string;
+    public function getLabel(): ?string;
 
     /**
      * Return the translation domain to use for the current field.
-     *
-     * @return string
      */
     public function getTranslationDomain(): string;
 
     /**
      * Return true if field is sortable.
-     *
-     * @return bool
      */
     public function isSortable(): bool;
 
@@ -254,9 +238,6 @@ interface FieldDescriptionInterface
     public function getSortParentAssociationMapping(): array;
 
     /**
-     * @param object|null $object
-     * @param string      $fieldName
-     *
      * @return mixed
      */
     public function getFieldValue(?object $object, string $fieldName);
