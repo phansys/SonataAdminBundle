@@ -212,7 +212,7 @@ abstract class BaseFieldDescription implements FieldDescriptionInterface
         return $this->template;
     }
 
-    public function setType(string $type): void
+    public function setType(?string $type): void
     {
         $this->type = $type;
     }

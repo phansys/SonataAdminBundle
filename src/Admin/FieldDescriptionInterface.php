@@ -90,7 +90,7 @@ interface FieldDescriptionInterface
      * return the field type, the type is a mandatory field as it used to select the correct template
      * or the logic associated to the current FieldDescription object.
      */
-    public function setType(string $type);
+    public function setType(?string $type);
 
     /**
      * return the type.
