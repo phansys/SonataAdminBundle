@@ -39,6 +39,7 @@ use Sonata\AdminBundle\Security\Handler\SecurityHandlerInterface;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Templating\MutableTemplateRegistryInterface;
 use Sonata\AdminBundle\Translator\LabelTranslatorStrategyInterface;
+use Sonata\Exporter\Source\SourceIteratorInterface;
 use Sonata\Form\Validator\Constraints\InlineConstraint;
 use Sonata\Form\Validator\ErrorElement;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -549,7 +550,7 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
      * @param string $class
      * @param string $baseControllerName
      */
-    public function __construct($code, $class, $baseControllerName)
+    public function __construct(string $code, string $class, string $baseControllerName)
     {
         $this->code = $code;
         $this->class = $class;
@@ -564,7 +565,7 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
      *
      * NEXT_MAJOR: return null to indicate no override
      */
-    public function getExportFormats()
+    public function getExportFormats(): array
     {
         return [
             'json', 'xml', 'csv', 'xls',
@@ -587,7 +588,7 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
         return $fields;
     }
 
-    public function getDataSourceIterator()
+    public function getDataSourceIterator(): SourceIteratorInterface
     {
         $datagrid = $this->getDatagrid();
         $datagrid->buildPager();
@@ -631,7 +632,7 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
         $this->configure();
     }
 
-    public function update($object)
+    public function update(object $object): object
     {
         $this->preUpdate($object);
         foreach ($this->extensions as $extension) {
@@ -652,7 +653,7 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
         return $object;
     }
 
-    public function create($object)
+    public function create(object $object): object
     {
         $this->prePersist($object);
         foreach ($this->extensions as $extension) {
@@ -675,7 +676,7 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
         return $object;
     }
 
-    public function delete($object): void
+    public function delete(object $object): void
     {
         $this->preRemove($object);
         foreach ($this->extensions as $extension) {
@@ -695,27 +696,27 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
     {
     }
 
-    public function preUpdate($object): void
+    public function preUpdate(object $object): void
     {
     }
 
-    public function postUpdate($object): void
+    public function postUpdate(object $object): void
     {
     }
 
-    public function prePersist($object): void
+    public function prePersist(object $object): void
     {
     }
 
-    public function postPersist($object): void
+    public function postPersist(object $object): void
     {
     }
 
-    public function preRemove($object): void
+    public function preRemove(object $object): void
     {
     }
 
-    public function postRemove($object): void
+    public function postRemove(object $object): void
     {
     }
 
@@ -723,7 +724,7 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
     {
     }
 
-    public function getFilterParameters()
+    public function getFilterParameters(): array
     {
         $parameters = [];
 
@@ -808,7 +809,7 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
      * @param string $code
      * @param string $value
      */
-    final public function addParentAssociationMapping($code, $value): void
+    final public function addParentAssociationMapping(string $code, string $value): void
     {
         $this->parentAssociationMapping[$code] = $value;
     }
@@ -820,7 +821,7 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
      *
      * @return string the baseRoutePattern used to generate the routing information
      */
-    public function getBaseRoutePattern()
+    public function getBaseRoutePattern(): string
     {
         if (null !== $this->cachedBaseRoutePattern) {
             return $this->cachedBaseRoutePattern;
@@ -870,7 +871,7 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
      *
      * @return string the baseRouteName used to generate the routing information
      */
-    public function getBaseRouteName()
+    public function getBaseRouteName(): string
     {
         if (null !== $this->cachedBaseRouteName) {
             return $this->cachedBaseRouteName;
@@ -915,7 +916,7 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
     public function getClass()
     {
         if ($this->hasActiveSubClass()) {
-            if ($this->getParentFieldDescription()) {
+            if ($this->hasParentFieldDescription()) {
                 throw new \RuntimeException('Feature not implemented: an embedded admin cannot have subclass');
             }
 
@@ -961,12 +962,12 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
         $this->subClasses = $subClasses;
     }
 
-    public function hasSubClass($name)
+    public function hasSubClass($name): bool
     {
         return isset($this->subClasses[$name]);
     }
 
-    public function hasActiveSubClass()
+    public function hasActiveSubClass(): bool
     {
         if (\count($this->subClasses) > 0 && $this->request) {
             return null !== $this->getRequest()->query->get('subclass');
@@ -975,67 +976,40 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
         return false;
     }
 
-    public function getActiveSubClass()
+    public function getActiveSubClass(): string
     {
         if (!$this->hasActiveSubClass()) {
-            @trigger_error(sprintf(
-                'Calling %s() when there is no active subclass is deprecated since sonata-project/admin-bundle 3.52 and will throw an exception in 4.0. '.
-                'Use %s::hasActiveSubClass() to know if there is an active subclass.',
-                __METHOD__,
-                __CLASS__
-            ), E_USER_DEPRECATED);
-            // NEXT_MAJOR : remove the previous `trigger_error()` call, the `return null` statement, uncomment the following exception and declare string as return type
-            // throw new \LogicException(sprintf(
-            //    'Admin "%s" has no active subclass.',
-            //    static::class
-            // ));
-
-            return null;
+            throw new \LogicException(sprintf(
+               'Admin "%s" has no active subclass.',
+               static::class
+            ));
         }
 
         return $this->getSubClass($this->getActiveSubclassCode());
     }
 
-    public function getActiveSubclassCode()
+    public function getActiveSubclassCode(): string
     {
         if (!$this->hasActiveSubClass()) {
-            @trigger_error(sprintf(
-                'Calling %s() when there is no active subclass is deprecated since sonata-project/admin-bundle 3.52 and will throw an exception in 4.0. '.
-                'Use %s::hasActiveSubClass() to know if there is an active subclass.',
-                __METHOD__,
-                __CLASS__
-            ), E_USER_DEPRECATED);
-            // NEXT_MAJOR : remove the previous `trigger_error()` call, the `return null` statement, uncomment the following exception and declare string as return type
-            // throw new \LogicException(sprintf(
-            //    'Admin "%s" has no active subclass.',
-            //    static::class
-            // ));
-
-            return null;
+            throw new \LogicException(sprintf(
+               'Admin "%s" has no active subclass.',
+               static::class
+            ));
         }
 
         $subClass = $this->getRequest()->query->get('subclass');
 
         if (!$this->hasSubClass($subClass)) {
-            @trigger_error(sprintf(
-                'Calling %s() when there is no active subclass is deprecated since sonata-project/admin-bundle 3.52 and will throw an exception in 4.0. '.
-                'Use %s::hasActiveSubClass() to know if there is an active subclass.',
-                __METHOD__,
-                __CLASS__
-            ), E_USER_DEPRECATED);
-            // NEXT_MAJOR : remove the previous `trigger_error()` call, the `return null` statement, uncomment the following exception and declare string as return type
-            // throw new \LogicException(sprintf(
-            //    'Admin "%s" has no active subclass.',
-            //    static::class
-            // ));
-
-            return null;
+            throw new \LogicException(sprintf(
+               'Admin "%s" has no active subclass.',
+               static::class
+            ));
         }
 
         return $subClass;
     }
 
-    public function getBatchActions()
+    public function getBatchActions(): array
     {
         $actions = [];
 
@@ -1066,19 +1040,19 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
         return $actions;
     }
 
-    public function getRoutes()
+    public function getRoutes(): \Sonata\AdminBundle\Route\RouteCollection
     {
         $this->buildRoutes();
 
         return $this->routes;
     }
 
-    public function getRouterIdParameter()
+    public function getRouterIdParameter(): string
     {
         return '{'.$this->getIdParameter().'}';
     }
 
-    public function getIdParameter()
+    public function getIdParameter(): string
     {
         $parameter = 'id';
 
@@ -1089,7 +1063,7 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
         return $parameter;
     }
 
-    public function hasRoute($name)
+    public function hasRoute($name): bool
     {
         if (!$this->routeGenerator) {
             throw new \RuntimeException('RouteGenerator cannot be null');
@@ -1120,19 +1094,19 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
         return ($admin->getBaseRouteName().'_'.$name) === $route;
     }
 
-    public function generateObjectUrl($name, $object, array $parameters = [], $absolute = RoutingUrlGeneratorInterface::ABSOLUTE_PATH)
+    public function generateObjectUrl(string $name, object $object, array $parameters = [], int $absolute = RoutingUrlGeneratorInterface::ABSOLUTE_PATH): string
     {
         $parameters['id'] = $this->getUrlsafeIdentifier($object);
 
         return $this->generateUrl($name, $parameters, $absolute);
     }
 
-    public function generateUrl($name, array $parameters = [], $absolute = RoutingUrlGeneratorInterface::ABSOLUTE_PATH)
+    public function generateUrl(string $name, array $parameters = [], int $absolute = RoutingUrlGeneratorInterface::ABSOLUTE_PATH): string
     {
         return $this->routeGenerator->generateUrl($this, $name, $parameters, $absolute);
     }
 
-    public function generateMenuUrl($name, array $parameters = [], $absolute = RoutingUrlGeneratorInterface::ABSOLUTE_PATH)
+    public function generateMenuUrl(string $name, array $parameters = [], int $absolute = RoutingUrlGeneratorInterface::ABSOLUTE_PATH): array
     {
         return $this->routeGenerator->generateMenuUrl($this, $name, $parameters, $absolute);
     }
@@ -1158,7 +1132,7 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
         $this->getTemplateRegistry()->setTemplate($name, $template);
     }
 
-    public function getNewInstance()
+    public function getNewInstance(): object
     {
         $object = $this->getModelManager()->getModelInstance($this->getClass());
         foreach ($this->getExtensions() as $extension) {
@@ -1168,7 +1142,7 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
         return $object;
     }
 
-    public function getFormBuilder()
+    public function getFormBuilder(): \Symfony\Component\Form\FormBuilderInterface
     {
         $this->formOptions['data_class'] = $this->getClass();
 
@@ -1222,7 +1196,7 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
         $fieldDescription->setAssociationAdmin($admin);
     }
 
-    public function getObject($id)
+    public function getObject($id): ?object
     {
         $object = $this->getModelManager()->find($this->getClass(), $id);
         foreach ($this->getExtensions() as $extension) {
@@ -1232,14 +1206,14 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
         return $object;
     }
 
-    public function getForm()
+    public function getForm(): ?\Symfony\Component\Form\Form
     {
         $this->buildForm();
 
         return $this->form;
     }
 
-    public function getList()
+    public function getList(): \Sonata\AdminBundle\Admin\FieldDescriptionCollection
     {
         $this->buildList();
 
@@ -1249,7 +1223,7 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
     /**
      * @final since sonata-project/admin-bundle 3.63.0
      */
-    public function createQuery($context = 'list')
+    public function createQuery($context = 'list'): \Sonata\AdminBundle\Datagrid\ProxyQueryInterface
     {
         if (\func_num_args() > 0) {
             @trigger_error(
@@ -1268,14 +1242,14 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
         return $query;
     }
 
-    public function getDatagrid()
+    public function getDatagrid(): ?\Sonata\AdminBundle\Datagrid\DatagridInterface
     {
         $this->buildDatagrid();
 
         return $this->datagrid;
     }
 
-    public function buildTabMenu($action, AdminInterface $childAdmin = null): MenuItemInterface
+    public function buildTabMenu(string $action, AdminInterface $childAdmin = null): MenuItemInterface
     {
         if ($this->loaded['tab_menu']) {
             return $this->menu;
@@ -1308,7 +1282,7 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
      *
      * @return ItemInterface
      */
-    public function getSideMenu($action, AdminInterface $childAdmin = null)
+    public function getSideMenu(string $action, AdminInterface $childAdmin = null)
     {
         if ($this->isChild()) {
             return $this->getParent()->getSideMenu($action, $this);
@@ -1340,20 +1314,17 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
         $this->baseControllerName = $baseControllerName;
     }
 
-    public function getBaseControllerName()
+    public function getBaseControllerName(): string
     {
         return $this->baseControllerName;
     }
 
-    /**
-     * @param string $label
-     */
-    public function setLabel($label): void
+    public function setLabel(?string $label): void
     {
         $this->label = $label;
     }
 
-    public function getLabel()
+    public function getLabel(): ?string
     {
         return $this->label;
     }
@@ -1365,7 +1336,7 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
      *
      * @deprecated since sonata-project/admin-bundle 3.34, to be removed in 4.0.
      */
-    public function setPersistFilters($persist): void
+    public function setPersistFilters(bool $persist): void
     {
         @trigger_error(
             'The '.__METHOD__.' method is deprecated since version 3.34 and will be removed in 4.0.',
@@ -1385,7 +1356,7 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
     /**
      * @param int $maxPerPage
      */
-    public function setMaxPerPage($maxPerPage): void
+    public function setMaxPerPage(int $maxPerPage): void
     {
         $this->maxPerPage = $maxPerPage;
     }
@@ -1393,7 +1364,7 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
     /**
      * @return int
      */
-    public function getMaxPerPage()
+    public function getMaxPerPage(): int
     {
         return $this->maxPerPage;
     }
@@ -1401,7 +1372,7 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
     /**
      * @param int $maxPageLinks
      */
-    public function setMaxPageLinks($maxPageLinks): void
+    public function setMaxPageLinks(int $maxPageLinks): void
     {
         $this->maxPageLinks = $maxPageLinks;
     }
@@ -1409,7 +1380,7 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
     /**
      * @return int
      */
-    public function getMaxPageLinks()
+    public function getMaxPageLinks(): int
     {
         return $this->maxPageLinks;
     }
@@ -1438,7 +1409,7 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
     /**
      * @param array $group
      */
-    public function reorderFormGroup($group, array $keys): void
+    public function reorderFormGroup(array $group, array $keys): void
     {
         $formGroups = $this->getFormGroups();
         $formGroups[$group]['fields'] = array_merge(array_flip($keys), $formGroups[$group]['fields']);
@@ -1482,17 +1453,17 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
         $this->setShowGroups($showGroups);
     }
 
-    public function setParentFieldDescription(FieldDescriptionInterface $parentFieldDescription): void
+    public function setParentFieldDescription(?FieldDescriptionInterface $parentFieldDescription): void
     {
         $this->parentFieldDescription = $parentFieldDescription;
     }
 
-    public function getParentFieldDescription()
+    public function getParentFieldDescription(): ?FieldDescriptionInterface
     {
         return $this->parentFieldDescription;
     }
 
-    public function hasParentFieldDescription()
+    public function hasParentFieldDescription(): bool
     {
         return $this->parentFieldDescription instanceof FieldDescriptionInterface;
     }
@@ -1515,7 +1486,7 @@ EOT;
         $this->subject = $subject;
     }
 
-    public function getSubject()
+    public function getSubject(): ?object
     {
         if (null === $this->subject && $this->request && !$this->hasParentFieldDescription()) {
             $id = $this->request->get($this->getIdParameter());
@@ -1528,19 +1499,19 @@ EOT;
         return $this->subject;
     }
 
-    public function hasSubject()
+    public function hasSubject(): bool
     {
         return (bool) $this->getSubject();
     }
 
-    public function getFormFieldDescriptions()
+    public function getFormFieldDescriptions(): array
     {
         $this->buildForm();
 
         return $this->formFieldDescriptions;
     }
 
-    public function getFormFieldDescription($name)
+    public function getFormFieldDescription(string $name): \Sonata\AdminBundle\Admin\FieldDescriptionInterface
     {
         return $this->hasFormFieldDescription($name) ? $this->formFieldDescriptions[$name] : null;
     }
@@ -1552,7 +1523,7 @@ EOT;
      *
      * @return bool
      */
-    public function hasFormFieldDescription($name)
+    public function hasFormFieldDescription(string $name): bool
     {
         return \array_key_exists($name, $this->formFieldDescriptions) ? true : false;
     }
@@ -1577,7 +1548,7 @@ EOT;
      *
      * @return array collection of form FieldDescription
      */
-    public function getShowFieldDescriptions()
+    public function getShowFieldDescriptions(): array
     {
         $this->buildShow();
 
@@ -1591,29 +1562,29 @@ EOT;
      *
      * @return FieldDescriptionInterface
      */
-    public function getShowFieldDescription($name)
+    public function getShowFieldDescription(string $name): \Sonata\AdminBundle\Admin\FieldDescriptionInterface
     {
         $this->buildShow();
 
         return $this->hasShowFieldDescription($name) ? $this->showFieldDescriptions[$name] : null;
     }
 
-    public function hasShowFieldDescription($name)
+    public function hasShowFieldDescription(string $name): bool
     {
         return \array_key_exists($name, $this->showFieldDescriptions);
     }
 
-    public function addShowFieldDescription($name, FieldDescriptionInterface $fieldDescription): void
+    public function addShowFieldDescription(string $name, FieldDescriptionInterface $fieldDescription): void
     {
         $this->showFieldDescriptions[$name] = $fieldDescription;
     }
 
-    public function removeShowFieldDescription($name): void
+    public function removeShowFieldDescription(string $name): void
     {
         unset($this->showFieldDescriptions[$name]);
     }
 
-    public function getListFieldDescriptions()
+    public function getListFieldDescriptions(): array
     {
         $this->buildList();
 
@@ -1625,44 +1596,44 @@ EOT;
         return $this->hasListFieldDescription($name) ? $this->listFieldDescriptions[$name] : null;
     }
 
-    public function hasListFieldDescription($name)
+    public function hasListFieldDescription($name): bool
     {
         $this->buildList();
 
         return \array_key_exists($name, $this->listFieldDescriptions) ? true : false;
     }
 
-    public function addListFieldDescription($name, FieldDescriptionInterface $fieldDescription): void
+    public function addListFieldDescription(string $name, FieldDescriptionInterface $fieldDescription): void
     {
         $this->listFieldDescriptions[$name] = $fieldDescription;
     }
 
-    public function removeListFieldDescription($name): void
+    public function removeListFieldDescription(string $name): void
     {
         unset($this->listFieldDescriptions[$name]);
     }
 
-    public function getFilterFieldDescription($name)
+    public function getFilterFieldDescription(string $name): ?\Sonata\AdminBundle\Admin\FieldDescriptionInterface
     {
         return $this->hasFilterFieldDescription($name) ? $this->filterFieldDescriptions[$name] : null;
     }
 
-    public function hasFilterFieldDescription($name)
+    public function hasFilterFieldDescription(string $name): bool
     {
         return \array_key_exists($name, $this->filterFieldDescriptions) ? true : false;
     }
 
-    public function addFilterFieldDescription($name, FieldDescriptionInterface $fieldDescription): void
+    public function addFilterFieldDescription(string $name, FieldDescriptionInterface $fieldDescription): void
     {
         $this->filterFieldDescriptions[$name] = $fieldDescription;
     }
 
-    public function removeFilterFieldDescription($name): void
+    public function removeFilterFieldDescription(string $name): void
     {
         unset($this->filterFieldDescriptions[$name]);
     }
 
-    public function getFilterFieldDescriptions()
+    public function getFilterFieldDescriptions(): array
     {
         $this->buildDatagrid();
 
@@ -1702,17 +1673,17 @@ EOT;
         }
     }
 
-    public function hasChild($code)
+    public function hasChild(string $code): bool
     {
         return isset($this->children[$code]);
     }
 
-    public function getChildren()
+    public function getChildren(): array
     {
         return $this->children;
     }
 
-    public function getChild($code)
+    public function getChild(string $code): ?\Sonata\AdminBundle\Admin\AdminInterface
     {
         return $this->hasChild($code) ? $this->children[$code] : null;
     }
@@ -1722,12 +1693,12 @@ EOT;
         $this->parent = $parent;
     }
 
-    public function getParent()
+    public function getParent(): ?\Sonata\AdminBundle\Admin\AdminInterface
     {
         return $this->parent;
     }
 
-    final public function getRootAncestor()
+    final public function getRootAncestor(): \Sonata\AdminBundle\Admin\AdminInterface
     {
         $parent = $this;
 
@@ -1738,7 +1709,7 @@ EOT;
         return $parent;
     }
 
-    final public function getChildDepth()
+    final public function getChildDepth(): int
     {
         $parent = $this;
         $depth = 0;
@@ -1751,7 +1722,7 @@ EOT;
         return $depth;
     }
 
-    final public function getCurrentLeafChildAdmin()
+    final public function getCurrentLeafChildAdmin(): ?AdminInterface
     {
         $child = $this->getCurrentChildAdmin();
 
@@ -1766,7 +1737,7 @@ EOT;
         return $child;
     }
 
-    public function isChild()
+    public function isChild(): bool
     {
         return $this->parent instanceof AdminInterface;
     }
@@ -1776,7 +1747,7 @@ EOT;
      *
      * @return bool if the admin has children
      */
-    public function hasChildren()
+    public function hasChildren(): bool
     {
         return \count($this->children) > 0;
     }
@@ -1786,7 +1757,7 @@ EOT;
         $this->uniqid = $uniqid;
     }
 
-    public function getUniqid()
+    public function getUniqid(): string
     {
         if (!$this->uniqid) {
             $this->uniqid = 's'.uniqid();
@@ -1798,12 +1769,12 @@ EOT;
     /**
      * {@inheritdoc}
      */
-    public function getClassnameLabel()
+    public function getClassnameLabel(): string
     {
         return $this->classnameLabel;
     }
 
-    public function getPersistentParameters()
+    public function getPersistentParameters(): array
     {
         $parameters = [];
 
@@ -1830,12 +1801,12 @@ EOT;
         return $parameters[$name] ?? null;
     }
 
-    public function setCurrentChild($currentChild): void
+    public function setCurrentChild(bool $currentChild): void
     {
         $this->currentChild = $currentChild;
     }
 
-    public function getCurrentChild()
+    public function getCurrentChild(): bool
     {
         return $this->currentChild;
     }
@@ -1845,7 +1816,7 @@ EOT;
      *
      * @return AdminInterface|null the current child admin instance
      */
-    public function getCurrentChildAdmin()
+    public function getCurrentChildAdmin(): ?AdminInterface
     {
         foreach ($this->children as $children) {
             if ($children->getCurrentChild()) {
@@ -1856,7 +1827,7 @@ EOT;
         return null;
     }
 
-    public function trans($id, array $parameters = [], $domain = null, $locale = null)
+    public function trans($id, array $parameters = [], $domain = null, $locale = null): string
     {
         @trigger_error(
             'The '.__METHOD__.' method is deprecated since version 3.9 and will be removed in 4.0.',
@@ -1882,7 +1853,7 @@ EOT;
      *
      * @deprecated since sonata-project/admin-bundle 3.9, to be removed with 4.0
      */
-    public function transChoice($id, $count, array $parameters = [], $domain = null, $locale = null)
+    public function transChoice(string $id, int $count, array $parameters = [], ?string $domain = null, ?string $locale = null): string
     {
         @trigger_error(
             'The '.__METHOD__.' method is deprecated since version 3.9 and will be removed in 4.0.',
@@ -1899,7 +1870,7 @@ EOT;
         $this->translationDomain = $translationDomain;
     }
 
-    public function getTranslationDomain()
+    public function getTranslationDomain(): string
     {
         return $this->translationDomain;
     }
@@ -1911,7 +1882,7 @@ EOT;
      *
      * @deprecated since sonata-project/admin-bundle 3.9, to be removed with 4.0
      */
-    public function setTranslator(TranslatorInterface $translator): void
+    public function setTranslator(?TranslatorInterface $translator): void
     {
         $args = \func_get_args();
         if (isset($args[1]) && $args[1]) {
@@ -1931,7 +1902,7 @@ EOT;
      *
      * @deprecated since sonata-project/admin-bundle 3.9, to be removed with 4.0
      */
-    public function getTranslator()
+    public function getTranslator(): ?TranslatorInterface
     {
         @trigger_error(
             'The '.__METHOD__.' method is deprecated since version 3.9 and will be removed in 4.0.',
@@ -1941,7 +1912,7 @@ EOT;
         return $this->translator;
     }
 
-    public function getTranslationLabel($label, $context = '', $type = '')
+    public function getTranslationLabel($label, $context = '', $type = ''): string
     {
         return $this->getLabelTranslatorStrategy()->getLabel($label, $context, $type);
     }
@@ -1955,7 +1926,7 @@ EOT;
         }
     }
 
-    public function getRequest()
+    public function getRequest(): \Symfony\Component\HttpFoundation\Request
     {
         if (!$this->request) {
             throw new \RuntimeException('The Request object has not been set');
@@ -1964,66 +1935,57 @@ EOT;
         return $this->request;
     }
 
-    public function hasRequest()
+    public function hasRequest(): bool
     {
         return null !== $this->request;
     }
 
-    public function setFormContractor(FormContractorInterface $formBuilder): void
+    public function setFormContractor(?FormContractorInterface $formBuilder): void
     {
         $this->formContractor = $formBuilder;
     }
 
-    /**
-     * @return FormContractorInterface
-     */
-    public function getFormContractor()
+    public function getFormContractor(): ?FormContractorInterface
     {
         return $this->formContractor;
     }
 
-    public function setDatagridBuilder(DatagridBuilderInterface $datagridBuilder): void
+    public function setDatagridBuilder(?DatagridBuilderInterface $datagridBuilder): void
     {
         $this->datagridBuilder = $datagridBuilder;
     }
 
-    public function getDatagridBuilder()
+    public function getDatagridBuilder(): ?DatagridBuilderInterface
     {
         return $this->datagridBuilder;
     }
 
-    public function setListBuilder(ListBuilderInterface $listBuilder): void
+    public function setListBuilder(?ListBuilderInterface $listBuilder): void
     {
         $this->listBuilder = $listBuilder;
     }
 
-    public function getListBuilder()
+    public function getListBuilder(): ?ListBuilderInterface
     {
         return $this->listBuilder;
     }
 
-    public function setShowBuilder(ShowBuilderInterface $showBuilder): void
+    public function setShowBuilder(?ShowBuilderInterface $showBuilder): void
     {
         $this->showBuilder = $showBuilder;
     }
 
-    /**
-     * @return ShowBuilderInterface
-     */
-    public function getShowBuilder()
+    public function getShowBuilder(): ?ShowBuilderInterface
     {
         return $this->showBuilder;
     }
 
-    public function setConfigurationPool(Pool $configurationPool): void
+    public function setConfigurationPool(?Pool $configurationPool): void
     {
         $this->configurationPool = $configurationPool;
     }
 
-    /**
-     * @return Pool
-     */
-    public function getConfigurationPool()
+    public function getConfigurationPool(): ?Pool
     {
         return $this->configurationPool;
     }
@@ -2033,20 +1995,17 @@ EOT;
         $this->routeGenerator = $routeGenerator;
     }
 
-    /**
-     * @return RouteGeneratorInterface
-     */
-    public function getRouteGenerator()
+    public function getRouteGenerator(): ?RouteGeneratorInterface
     {
         return $this->routeGenerator;
     }
 
-    public function getCode()
+    public function getCode(): string
     {
         return $this->code;
     }
 
-    public function getBaseCodeRoute()
+    public function getBaseCodeRoute(): string
     {
         if ($this->isChild()) {
             return $this->getParent()->getBaseCodeRoute().'|'.$this->getCode();
@@ -2055,30 +2014,27 @@ EOT;
         return $this->getCode();
     }
 
-    public function getModelManager()
+    public function getModelManager(): ?ModelManagerInterface
     {
         return $this->modelManager;
     }
 
-    public function setModelManager(ModelManagerInterface $modelManager): void
+    public function setModelManager(?ModelManagerInterface $modelManager): void
     {
         $this->modelManager = $modelManager;
     }
 
-    public function getManagerType()
+    public function getManagerType(): ?string
     {
         return $this->managerType;
     }
 
-    /**
-     * @param string $type
-     */
-    public function setManagerType($type): void
+    public function setManagerType(?string $type): void
     {
         $this->managerType = $type;
     }
 
-    public function getObjectIdentifier()
+    public function getObjectIdentifier(): string
     {
         return $this->getCode();
     }
@@ -2091,19 +2047,15 @@ EOT;
         $this->securityInformation = $information;
     }
 
-    public function getSecurityInformation()
+    public function getSecurityInformation(): array
     {
         return $this->securityInformation;
     }
 
     /**
      * Return the list of permissions the user should have in order to display the admin.
-     *
-     * @param string $context
-     *
-     * @return array
      */
-    public function getPermissionsShow($context)
+    public function getPermissionsShow(string $context): array
     {
         switch ($context) {
             case self::CONTEXT_DASHBOARD:
@@ -2113,7 +2065,7 @@ EOT;
         }
     }
 
-    public function showIn($context)
+    public function showIn($context): bool
     {
         switch ($context) {
             case self::CONTEXT_DASHBOARD:
@@ -2128,12 +2080,12 @@ EOT;
         $this->getSecurityHandler()->createObjectSecurity($this, $object);
     }
 
-    public function setSecurityHandler(SecurityHandlerInterface $securityHandler): void
+    public function setSecurityHandler(?SecurityHandlerInterface $securityHandler): void
     {
         $this->securityHandler = $securityHandler;
     }
 
-    public function getSecurityHandler()
+    public function getSecurityHandler(): ?SecurityHandlerInterface
     {
         return $this->securityHandler;
     }
@@ -2149,32 +2101,32 @@ EOT;
         return $this->cacheIsGranted[$key];
     }
 
-    public function getUrlsafeIdentifier($entity)
+    public function getUrlsafeIdentifier($entity): string
     {
         return $this->getModelManager()->getUrlsafeIdentifier($entity);
     }
 
-    public function getNormalizedIdentifier($entity)
+    public function getNormalizedIdentifier($entity): string
     {
         return $this->getModelManager()->getNormalizedIdentifier($entity);
     }
 
-    public function id($entity)
+    public function id($entity): string
     {
         return $this->getNormalizedIdentifier($entity);
     }
 
-    public function setValidator(ValidatorInterface $validator): void
+    public function setValidator(?ValidatorInterface $validator): void
     {
         $this->validator = $validator;
     }
 
-    public function getValidator()
+    public function getValidator(): ?ValidatorInterface
     {
         return $this->validator;
     }
 
-    public function getShow()
+    public function getShow(): ?FieldDescriptionCollection
     {
         $this->buildShow();
 
@@ -2186,7 +2138,7 @@ EOT;
         $this->formTheme = $formTheme;
     }
 
-    public function getFormTheme()
+    public function getFormTheme(): array
     {
         return $this->formTheme;
     }
@@ -2196,7 +2148,7 @@ EOT;
         $this->filterTheme = $filterTheme;
     }
 
-    public function getFilterTheme()
+    public function getFilterTheme(): array
     {
         return $this->filterTheme;
     }
@@ -2206,32 +2158,32 @@ EOT;
         $this->extensions[] = $extension;
     }
 
-    public function getExtensions()
+    public function getExtensions(): array
     {
         return $this->extensions;
     }
 
-    public function setMenuFactory(MenuFactoryInterface $menuFactory): void
+    public function setMenuFactory(?MenuFactoryInterface $menuFactory): void
     {
         $this->menuFactory = $menuFactory;
     }
 
-    public function getMenuFactory()
+    public function getMenuFactory(): ?MenuFactoryInterface
     {
         return $this->menuFactory;
     }
 
-    public function setRouteBuilder(RouteBuilderInterface $routeBuilder): void
+    public function setRouteBuilder(?RouteBuilderInterface $routeBuilder): void
     {
         $this->routeBuilder = $routeBuilder;
     }
 
-    public function getRouteBuilder()
+    public function getRouteBuilder(): ?RouteBuilderInterface
     {
         return $this->routeBuilder;
     }
 
-    public function toString($object)
+    public function toString($object): string
     {
         if (!\is_object($object)) {
             return '';
@@ -2244,17 +2196,17 @@ EOT;
         return sprintf('%s:%s', ClassUtils::getClass($object), spl_object_hash($object));
     }
 
-    public function setLabelTranslatorStrategy(LabelTranslatorStrategyInterface $labelTranslatorStrategy): void
+    public function setLabelTranslatorStrategy(?LabelTranslatorStrategyInterface $labelTranslatorStrategy): void
     {
         $this->labelTranslatorStrategy = $labelTranslatorStrategy;
     }
 
-    public function getLabelTranslatorStrategy()
+    public function getLabelTranslatorStrategy(): ?LabelTranslatorStrategyInterface
     {
         return $this->labelTranslatorStrategy;
     }
 
-    public function supportsPreviewMode()
+    public function supportsPreviewMode(): bool
     {
         return $this->supportsPreviewMode;
     }
@@ -2269,57 +2221,47 @@ EOT;
 
     /**
      * Returns predefined per page options.
-     *
-     * @return array
      */
-    public function getPerPageOptions()
+    public function getPerPageOptions(): array
     {
         return $this->perPageOptions;
     }
 
     /**
      * Set pager type.
-     *
-     * @param string $pagerType
      */
-    public function setPagerType($pagerType): void
+    public function setPagerType(string $pagerType): void
     {
         $this->pagerType = $pagerType;
     }
 
     /**
      * Get pager type.
-     *
-     * @return string
      */
-    public function getPagerType()
+    public function getPagerType(): string
     {
         return $this->pagerType;
     }
 
     /**
      * Returns true if the per page value is allowed, false otherwise.
-     *
-     * @param int $perPage
-     *
-     * @return bool
      */
-    public function determinedPerPageValue($perPage)
+    public function determinedPerPageValue(int $perPage): bool
     {
         return \in_array($perPage, $this->perPageOptions, true);
     }
 
-    public function isAclEnabled()
+    public function isAclEnabled(): bool
     {
         return $this->getSecurityHandler() instanceof AclSecurityHandlerInterface;
     }
 
-    public function getObjectMetadata($object)
+    public function getObjectMetadata($object): \Sonata\AdminBundle\Object\Metadata
     {
         return new Metadata($this->toString($object));
     }
 
-    public function getListModes()
+    public function getListModes(): array
     {
         return $this->listModes;
     }
@@ -2342,12 +2284,12 @@ EOT;
         return $this->getRequest()->getSession()->get(sprintf('%s.list_mode', $this->getCode()), 'list');
     }
 
-    public function getAccessMapping()
+    public function getAccessMapping(): array
     {
         return $this->accessMapping;
     }
 
-    public function checkAccess($action, $object = null): void
+    public function checkAccess(string $action, object $object = null): void
     {
         $access = $this->getAccess();
 
@@ -2469,7 +2411,7 @@ EOT;
     /**
      * {@inheritdoc}
      */
-    public function getDashboardActions()
+    public function getDashboardActions(): array
     {
         $actions = [];
 
@@ -2566,7 +2508,7 @@ EOT;
      *
      * @return string
      */
-    final protected function urlize($word, $sep = '_')
+    final protected function urlize(string $word, string $sep = '_'): string
     {
         return strtolower(preg_replace('/[^a-z0-9_]/i', $sep.'$1', $word));
     }
@@ -2581,7 +2523,7 @@ EOT;
      *
      * @return array
      */
-    final protected function getDefaultFilterValues()
+    final protected function getDefaultFilterValues(): array
     {
         $defaultFilterValues = [];
 
@@ -2621,10 +2563,8 @@ EOT;
      * Allows you to customize batch actions.
      *
      * @param array $actions List of actions
-     *
-     * @return array
      */
-    protected function configureBatchActions($actions)
+    protected function configureBatchActions(array $actions): array
     {
         return $actions;
     }
@@ -2634,7 +2574,7 @@ EOT;
      *
      * @deprecated Use configureTabMenu instead
      */
-    protected function configureSideMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
+    protected function configureSideMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null): void
     {
     }
 
@@ -2643,7 +2583,7 @@ EOT;
      *
      * @param string $action
      */
-    protected function configureTabMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
+    protected function configureTabMenu(MenuItemInterface $menu, string $action, AdminInterface $childAdmin = null): void
     {
         // Use configureSideMenu not to mess with previous overrides
         // NEXT_MAJOR: remove this line
@@ -2769,7 +2709,7 @@ EOT;
      *
      * @return string the subclass
      */
-    protected function getSubClass($name)
+    protected function getSubClass(string $name): string
     {
         if ($this->hasSubClass($name)) {
             return $this->subClasses[$name];
@@ -2828,7 +2768,7 @@ EOT;
      *
      * @return array<string, string>
      */
-    protected function getAccess()
+    protected function getAccess(): array
     {
         $access = array_merge([
             'acl' => 'MASTER',

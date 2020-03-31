@@ -53,7 +53,7 @@ class AdminHelper
      *
      * @return FormBuilderInterface|null
      */
-    public function getChildFormBuilder(FormBuilderInterface $formBuilder, $elementId)
+    public function getChildFormBuilder(FormBuilderInterface $formBuilder, string $elementId)
     {
         foreach (new FormBuilderIterator($formBuilder) as $name => $formBuilder) {
             if ($name === $elementId) {
@@ -69,7 +69,7 @@ class AdminHelper
      *
      * @return FormView|null
      */
-    public function getChildFormView(FormView $formView, $elementId)
+    public function getChildFormView(FormView $formView, string $elementId)
     {
         foreach (new \RecursiveIteratorIterator(new FormViewIterator($formView), \RecursiveIteratorIterator::SELF_FIRST) as $name => $formView) {
             if ($name === $elementId) {
@@ -89,7 +89,7 @@ class AdminHelper
      *
      * @return AdminInterface
      */
-    public function getAdmin($code)
+    public function getAdmin(string $code): \Sonata\AdminBundle\Admin\AdminInterface
     {
         return $this->pool->getInstance($code);
     }
@@ -106,7 +106,7 @@ class AdminHelper
      *
      * @return array
      */
-    public function appendFormFieldElement(AdminInterface $admin, $subject, $elementId)
+    public function appendFormFieldElement(AdminInterface $admin, object $subject, string $elementId): array
     {
         // child rows marked as toDelete
         $toDelete = [];
@@ -225,7 +225,7 @@ class AdminHelper
      *
      * @throws \RuntimeException
      */
-    public function addNewInstance($object, FieldDescriptionInterface $fieldDescription): void
+    public function addNewInstance(object $object, FieldDescriptionInterface $fieldDescription): void
     {
         $instance = $fieldDescription->getAssociationAdmin()->getNewInstance();
         $mapping = $fieldDescription->getAssociationMapping();
@@ -279,7 +279,7 @@ class AdminHelper
      *
      * @return string
      */
-    public function getElementAccessPath($elementId, $entity)
+    public function getElementAccessPath(string $elementId, $entity): string
     {
         $propertyAccessor = $this->pool->getPropertyAccessor();
 
@@ -316,7 +316,7 @@ class AdminHelper
      *
      * @return string
      */
-    protected function getEntityClassName(AdminInterface $admin, $elements)
+    protected function getEntityClassName(AdminInterface $admin, array $elements): string
     {
         $element = array_shift($elements);
         $associationAdmin = $admin->getFormFieldDescription($element)->getAssociationAdmin();

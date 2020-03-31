@@ -77,9 +77,9 @@ class Pool
      */
     public function __construct(
         ContainerInterface $container,
-        $title,
-        $logoTitle,
-        $options = [],
+        string $title,
+        string $logoTitle,
+        array $options = [],
         PropertyAccessorInterface $propertyAccessor = null
     ) {
         $this->container = $container;
@@ -92,7 +92,7 @@ class Pool
     /**
      * @return array
      */
-    public function getGroups()
+    public function getGroups(): array
     {
         $groups = $this->adminGroups;
 
@@ -112,7 +112,7 @@ class Pool
      *
      * @return bool
      */
-    public function hasGroup($group)
+    public function hasGroup(string $group): bool
     {
         return isset($this->adminGroups[$group]);
     }
@@ -120,7 +120,7 @@ class Pool
     /**
      * @return array
      */
-    public function getDashboardGroups()
+    public function getDashboardGroups(): array
     {
         $groups = $this->adminGroups;
 
@@ -159,7 +159,7 @@ class Pool
      *
      * @return AdminInterface[]
      */
-    public function getAdminsByGroup($group)
+    public function getAdminsByGroup(string $group): array
     {
         if (!isset($this->adminGroups[$group])) {
             throw new \InvalidArgumentException(sprintf('Group "%s" not found in admin pool.', $group));
@@ -185,7 +185,7 @@ class Pool
      *
      * @return \Sonata\AdminBundle\Admin\AdminInterface|null
      */
-    public function getAdminByClass($class)
+    public function getAdminByClass(string $class): ?\Sonata\AdminBundle\Admin\AdminInterface
     {
         if (!$this->hasAdminByClass($class)) {
             return null;
@@ -211,7 +211,7 @@ class Pool
      *
      * @return bool
      */
-    public function hasAdminByClass($class)
+    public function hasAdminByClass(string $class): bool
     {
         return isset($this->adminClasses[$class]);
     }
@@ -222,7 +222,7 @@ class Pool
      *
      * @throws \InvalidArgumentException if the root admin code is an empty string
      */
-    public function getAdminByAdminCode(string $adminCode): AdminInterface
+    public function getAdminByAdminCode(string $adminCode): ?\Sonata\AdminBundle\Admin\AdminInterface
     {
         $codes = explode('|', $adminCode);
         $code = trim(array_shift($codes));
@@ -281,7 +281,7 @@ class Pool
      *
      * @return AdminInterface
      */
-    public function getInstance($id)
+    public function getInstance(string $id): \Sonata\AdminBundle\Admin\AdminInterface
     {
         if (!\in_array($id, $this->adminServiceIds, true)) {
             $msg = sprintf('Admin service "%s" not found in admin pool.', $id);
@@ -323,7 +323,7 @@ class Pool
     /**
      * @return ContainerInterface|null
      */
-    public function getContainer()
+    public function getContainer(): \Symfony\Component\DependencyInjection\ContainerInterface
     {
         return $this->container;
     }
@@ -336,7 +336,7 @@ class Pool
     /**
      * @return array
      */
-    public function getAdminGroups()
+    public function getAdminGroups(): array
     {
         return $this->adminGroups;
     }
@@ -349,7 +349,7 @@ class Pool
     /**
      * @return array
      */
-    public function getAdminServiceIds()
+    public function getAdminServiceIds(): array
     {
         return $this->adminServiceIds;
     }
@@ -362,7 +362,7 @@ class Pool
     /**
      * @return array
      */
-    public function getAdminClasses()
+    public function getAdminClasses(): array
     {
         return $this->adminClasses;
     }
@@ -370,7 +370,7 @@ class Pool
     /**
      * @return string
      */
-    public function getTitleLogo()
+    public function getTitleLogo(): string
     {
         return $this->titleLogo;
     }
@@ -378,7 +378,7 @@ class Pool
     /**
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -389,7 +389,7 @@ class Pool
      *
      * @return mixed
      */
-    public function getOption($name, $default = null)
+    public function getOption(string $name, $default = null)
     {
         if (isset($this->options[$name])) {
             return $this->options[$name];
@@ -398,7 +398,7 @@ class Pool
         return $default;
     }
 
-    public function getPropertyAccessor()
+    public function getPropertyAccessor(): \Symfony\Component\PropertyAccess\PropertyAccessorInterface
     {
         if (null === $this->propertyAccessor) {
             $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
