@@ -131,17 +131,17 @@ abstract class BaseFieldDescription implements FieldDescriptionInterface
      */
     private static $fieldGetters = [];
 
-    public function setFieldName($fieldName): void
+    public function setFieldName(?string $fieldName): void
     {
         $this->fieldName = $fieldName;
     }
 
-    public function getFieldName()
+    public function getFieldName(): ?string
     {
         return $this->fieldName;
     }
 
-    public function setName($name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
 
@@ -150,17 +150,17 @@ abstract class BaseFieldDescription implements FieldDescriptionInterface
         }
     }
 
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function getOption($name, $default = null)
+    public function getOption(string $name, $default = null)
     {
         return isset($this->options[$name]) ? $this->options[$name] : $default;
     }
 
-    public function setOption($name, $value): void
+    public function setOption(string $name, $value): void
     {
         $this->options[$name] = $value;
     }
@@ -197,22 +197,22 @@ abstract class BaseFieldDescription implements FieldDescriptionInterface
         $this->options = $options;
     }
 
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }
 
-    public function setTemplate($template): void
+    public function setTemplate(string $template): void
     {
         $this->template = $template;
     }
 
-    public function getTemplate()
+    public function getTemplate(): string
     {
         return $this->template;
     }
 
-    public function setType($type): void
+    public function setType(string $type): void
     {
         $this->type = $type;
     }
@@ -227,22 +227,22 @@ abstract class BaseFieldDescription implements FieldDescriptionInterface
         $this->parent = $parent;
     }
 
-    public function getParent()
+    public function getParent(): ?\Sonata\AdminBundle\Admin\AdminInterface
     {
         return $this->parent;
     }
 
-    public function getAssociationMapping()
+    public function getAssociationMapping(): array
     {
         return $this->associationMapping;
     }
 
-    public function getFieldMapping()
+    public function getFieldMapping(): array
     {
         return $this->fieldMapping;
     }
 
-    public function getParentAssociationMappings()
+    public function getParentAssociationMappings(): array
     {
         return $this->parentAssociationMappings;
     }
@@ -253,17 +253,17 @@ abstract class BaseFieldDescription implements FieldDescriptionInterface
         $this->associationAdmin->setParentFieldDescription($this);
     }
 
-    public function getAssociationAdmin()
+    public function getAssociationAdmin(): ?\Sonata\AdminBundle\Admin\AdminInterface
     {
         return $this->associationAdmin;
     }
 
-    public function hasAssociationAdmin()
+    public function hasAssociationAdmin(): bool
     {
         return null !== $this->associationAdmin;
     }
 
-    public function getFieldValue($object, $fieldName)
+    public function getFieldValue(?object $object, string $fieldName)
     {
         if ($this->isVirtual() || null === $object) {
             return null;
@@ -321,12 +321,12 @@ abstract class BaseFieldDescription implements FieldDescriptionInterface
         $this->admin = $admin;
     }
 
-    public function getAdmin()
+    public function getAdmin(): \Sonata\AdminBundle\Admin\AdminInterface
     {
         return $this->admin;
     }
 
-    public function mergeOption($name, array $options = []): void
+    public function mergeOption(string $name, array $options = []): void
     {
         if (!isset($this->options[$name])) {
             $this->options[$name] = [];
@@ -359,17 +359,17 @@ abstract class BaseFieldDescription implements FieldDescriptionInterface
      *
      * @param string $help
      */
-    public function setHelp($help): void
+    public function setHelp(string $help): void
     {
         $this->help = $help;
     }
 
-    public function getHelp()
+    public function getHelp(): string
     {
         return $this->help;
     }
 
-    public function getLabel()
+    public function getLabel(): string
     {
         return $this->getOption('label');
     }
@@ -379,17 +379,17 @@ abstract class BaseFieldDescription implements FieldDescriptionInterface
         return false !== $this->getOption('sortable', false);
     }
 
-    public function getSortFieldMapping()
+    public function getSortFieldMapping(): array
     {
         return $this->getOption('sort_field_mapping');
     }
 
-    public function getSortParentAssociationMapping()
+    public function getSortParentAssociationMapping(): array
     {
         return $this->getOption('sort_parent_association_mappings');
     }
 
-    public function getTranslationDomain()
+    public function getTranslationDomain(): string
     {
         return $this->getOption('translation_domain') ?: $this->getAdmin()->getTranslationDomain();
     }

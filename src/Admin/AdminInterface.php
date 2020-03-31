@@ -616,17 +616,13 @@ interface AdminInterface extends AccessRegistryInterface, FieldDescriptionRegist
 
     /**
      * Set the current child status.
-     *
-     * @param bool $currentChild
      */
-    public function setCurrentChild($currentChild);
+    public function setCurrentChild(bool $currentChild);
 
     /**
      * Returns the current child status.
-     *
-     * @return bool
      */
-    public function getCurrentChild();
+    public function getCurrentChild(): bool;
 
     /**
      * Get translation label using the current TranslationStrategy.

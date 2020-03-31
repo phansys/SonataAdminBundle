@@ -29,14 +29,14 @@ interface UrlGeneratorInterface
      *
      * @return RouteCollection the list of available urls
      */
-    public function getRoutes();
+    public function getRoutes(): \Sonata\AdminBundle\Route\RouteCollection;
 
     /**
      * Return the parameter name used to represent the id in the url.
      *
      * @return string
      */
-    public function getRouterIdParameter();
+    public function getRouterIdParameter(): string;
 
     public function setRouteGenerator(RouteGeneratorInterface $routeGenerator);
 
@@ -51,11 +51,11 @@ interface UrlGeneratorInterface
      * @return string return a complete url
      */
     public function generateObjectUrl(
-        $name,
-        $object,
+        string $name,
+        object $object,
         array $parameters = [],
-        $absolute = RoutingUrlGeneratorInterface::ABSOLUTE_PATH
-    );
+        int $absolute = RoutingUrlGeneratorInterface::ABSOLUTE_PATH
+    ): string;
 
     /**
      * Generates a url for the given parameters.
@@ -66,7 +66,7 @@ interface UrlGeneratorInterface
      *
      * @return string return a complete url
      */
-    public function generateUrl($name, array $parameters = [], $absolute = RoutingUrlGeneratorInterface::ABSOLUTE_PATH);
+    public function generateUrl(string $name, array $parameters = [], int $absolute = RoutingUrlGeneratorInterface::ABSOLUTE_PATH): string;
 
     /**
      * Generates a url for the given parameters.
@@ -77,12 +77,12 @@ interface UrlGeneratorInterface
      *
      * @return array return url parts: 'route', 'routeParameters', 'routeAbsolute'
      */
-    public function generateMenuUrl($name, array $parameters = [], $absolute = RoutingUrlGeneratorInterface::ABSOLUTE_PATH);
+    public function generateMenuUrl(string $name, array $parameters = [], int $absolute = RoutingUrlGeneratorInterface::ABSOLUTE_PATH): array;
 
     /**
      * @param mixed $entity
      *
      * @return string a string representation of the id that is safe to use in a url
      */
-    public function getUrlsafeIdentifier($entity);
+    public function getUrlsafeIdentifier($entity): string;
 }

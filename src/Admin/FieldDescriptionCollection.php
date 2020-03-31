@@ -33,7 +33,7 @@ class FieldDescriptionCollection implements \ArrayAccess, \Countable
     /**
      * @return array
      */
-    public function getElements()
+    public function getElements(): array
     {
         return $this->elements;
     }
@@ -43,7 +43,7 @@ class FieldDescriptionCollection implements \ArrayAccess, \Countable
      *
      * @return bool
      */
-    public function has($name)
+    public function has(string $name): bool
     {
         return \array_key_exists($name, $this->elements);
     }
@@ -55,7 +55,7 @@ class FieldDescriptionCollection implements \ArrayAccess, \Countable
      *
      * @return FieldDescriptionInterface
      */
-    public function get($name)
+    public function get(string $name): \Sonata\AdminBundle\Admin\FieldDescriptionInterface
     {
         if ($this->has($name)) {
             return $this->elements[$name];
@@ -67,19 +67,19 @@ class FieldDescriptionCollection implements \ArrayAccess, \Countable
     /**
      * @param string $name
      */
-    public function remove($name): void
+    public function remove(string $name): void
     {
         if ($this->has($name)) {
             unset($this->elements[$name]);
         }
     }
 
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return $this->has($offset);
     }
 
-    public function offsetGet($offset)
+    public function offsetGet($offset): \Sonata\AdminBundle\Admin\FieldDescriptionInterface
     {
         return $this->get($offset);
     }
@@ -94,7 +94,7 @@ class FieldDescriptionCollection implements \ArrayAccess, \Countable
         $this->remove($offset);
     }
 
-    public function count()
+    public function count(): int
     {
         return \count($this->elements);
     }

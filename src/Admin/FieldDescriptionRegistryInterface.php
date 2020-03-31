@@ -27,14 +27,14 @@ interface FieldDescriptionRegistryInterface
      *
      * @return FieldDescriptionInterface
      */
-    public function getFormFieldDescription($name);
+    public function getFormFieldDescription(string $name): \Sonata\AdminBundle\Admin\FieldDescriptionInterface;
 
     /**
      * Build and return the collection of form FieldDescription.
      *
      * @return FieldDescriptionInterface[] collection of form FieldDescription
      */
-    public function getFormFieldDescriptions();
+    public function getFormFieldDescriptions(): array;
 
     /**
      * Returns true if the admin has a FieldDescription with the given $name.
@@ -43,42 +43,42 @@ interface FieldDescriptionRegistryInterface
      *
      * @return bool
      */
-    public function hasShowFieldDescription($name);
+    public function hasShowFieldDescription(string $name): bool;
 
     /**
      * Adds a FieldDescription.
      *
      * @param string $name
      */
-    public function addShowFieldDescription($name, FieldDescriptionInterface $fieldDescription);
+    public function addShowFieldDescription(string $name, FieldDescriptionInterface $fieldDescription);
 
     /**
      * Removes a ShowFieldDescription.
      *
      * @param string $name
      */
-    public function removeShowFieldDescription($name);
+    public function removeShowFieldDescription(string $name);
 
     /**
      * Adds a list FieldDescription.
      *
      * @param string $name
      */
-    public function addListFieldDescription($name, FieldDescriptionInterface $fieldDescription);
+    public function addListFieldDescription(string $name, FieldDescriptionInterface $fieldDescription);
 
     /**
      * Removes a list FieldDescription.
      *
      * @param string $name
      */
-    public function removeListFieldDescription($name);
+    public function removeListFieldDescription(string $name);
 
     /**
      * Returns a list depend on the given $object.
      *
      * @return FieldDescriptionCollection
      */
-    public function getList();
+    public function getList(): \Sonata\AdminBundle\Admin\FieldDescriptionCollection;
 
     /**
      * Returns true if the filter FieldDescription exists.
@@ -87,28 +87,28 @@ interface FieldDescriptionRegistryInterface
      *
      * @return bool
      */
-    public function hasFilterFieldDescription($name);
+    public function hasFilterFieldDescription(string $name): bool;
 
     /**
      * Adds a filter FieldDescription.
      *
      * @param string $name
      */
-    public function addFilterFieldDescription($name, FieldDescriptionInterface $fieldDescription);
+    public function addFilterFieldDescription(string $name, FieldDescriptionInterface $fieldDescription);
 
     /**
      * Removes a filter FieldDescription.
      *
      * @param string $name
      */
-    public function removeFilterFieldDescription($name);
+    public function removeFilterFieldDescription(string $name);
 
     /**
      * Returns the filter FieldDescription collection.
      *
      * @return FieldDescriptionInterface[]
      */
-    public function getFilterFieldDescriptions();
+    public function getFilterFieldDescriptions(): array;
 
     /**
      * Returns a filter FieldDescription.
@@ -117,5 +117,5 @@ interface FieldDescriptionRegistryInterface
      *
      * @return FieldDescriptionInterface|null
      */
-    public function getFilterFieldDescription($name);
+    public function getFilterFieldDescription(string $name): ?\Sonata\AdminBundle\Admin\FieldDescriptionInterface;
 }

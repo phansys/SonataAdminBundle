@@ -46,7 +46,7 @@ final class BreadcrumbsBuilder implements BreadcrumbsBuilderInterface
         ]);
     }
 
-    public function getBreadcrumbs(AdminInterface $admin, $action): array
+    public function getBreadcrumbs(AdminInterface $admin, string $action): iterable
     {
         $breadcrumbs = [];
         if ($admin->isChild()) {
@@ -74,7 +74,7 @@ final class BreadcrumbsBuilder implements BreadcrumbsBuilderInterface
      */
     public function buildBreadcrumbs(
         AdminInterface $admin,
-        $action,
+        string $action,
         ItemInterface $menu = null
     ): ItemInterface {
         if (!$menu) {
