@@ -515,9 +515,13 @@ class ShowMapperTest extends TestCase
 
     public function testEmptyFieldLabel(): void
     {
-        $this->showMapper->add('foo', null, ['label' => false]);
+        $this->showMapper->add('foo', null, ['label' => '']);
 
-        $this->assertFalse($this->showMapper->get('foo')->getOption('label'));
+        $this->assertSame('foo', $this->showMapper->get('foo')->getOption('label'));
+
+        $this->showMapper->add('bar', null, ['label' => null]);
+
+        $this->assertSame('bar', $this->showMapper->get('bar')->getOption('label'));
     }
 
     public function testAddOptionRole(): void
