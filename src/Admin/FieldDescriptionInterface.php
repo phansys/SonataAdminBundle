@@ -126,22 +126,16 @@ interface FieldDescriptionInterface
 
     /**
      * return the association mapping definition.
-     *
-     * @return array
      */
     public function getAssociationMapping(): array;
 
     /**
      * return the related Target Entity.
-     *
-     * @return string|null
      */
     public function getTargetEntity(): ?string;
 
     /**
      * set the field mapping information.
-     *
-     * @param array $fieldMapping
      */
     public function setFieldMapping(array $fieldMapping);
 
@@ -173,22 +167,16 @@ interface FieldDescriptionInterface
 
     /**
      * return the associated Admin instance (only used if the field is linked to an Admin).
-     *
-     * @return AdminInterface|null
      */
-    public function getAssociationAdmin(): ?\Sonata\AdminBundle\Admin\AdminInterface;
+    public function getAssociationAdmin(): ?AdminInterface;
 
     /**
      * return true if the FieldDescription is linked to an identifier field.
-     *
-     * @return bool
      */
     public function isIdentifier(): bool;
 
     /**
      * return the value linked to the description.
-     *
-     * @param object $object
      *
      * @return bool|mixed
      */
@@ -206,8 +194,6 @@ interface FieldDescriptionInterface
 
     /**
      * merge option values related to the provided option name.
-     *
-     * @param string $name
      *
      * @throws \RuntimeException
      */

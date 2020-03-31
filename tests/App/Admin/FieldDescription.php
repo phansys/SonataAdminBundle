@@ -21,7 +21,7 @@ final class FieldDescription extends BaseFieldDescription
     {
     }
 
-    public function getTargetEntity()
+    public function getTargetEntity(): ?string
     {
         return null;
     }
@@ -34,7 +34,7 @@ final class FieldDescription extends BaseFieldDescription
     {
     }
 
-    public function isIdentifier()
+    public function isIdentifier(): bool
     {
         return false;
     }
