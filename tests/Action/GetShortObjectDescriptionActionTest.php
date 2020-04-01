@@ -64,8 +64,6 @@ final class GetShortObjectDescriptionActionTest extends TestCase
 
     public function testGetShortObjectDescriptionActionInvalidAdmin(): void
     {
-        $this->expectException(NotFoundHttpException::class);
-
         $request = new Request([
             'code' => 'sonata.post.admin',
             'objectId' => 42,
@@ -74,6 +72,8 @@ final class GetShortObjectDescriptionActionTest extends TestCase
 
         $this->pool->getInstance('sonata.post.admin')->willReturn(null);
         $this->admin->setRequest(Argument::type(Request::class))->shouldNotBeCalled();
+
+        $this->expectException(NotFoundHttpException::class);
 
         ($this->action)($request);
     }
@@ -90,7 +90,7 @@ final class GetShortObjectDescriptionActionTest extends TestCase
         ]);
 
         $this->admin->setUniqid('asdasd123')->shouldBeCalled();
-        $this->admin->getObject(42)->willReturn(false);
+        $this->admin->getObject(42)->willReturn(null);
 
         ($this->action)($request);
     }
@@ -105,7 +105,7 @@ final class GetShortObjectDescriptionActionTest extends TestCase
         ]);
 
         $this->admin->setUniqid('asdasd123')->shouldBeCalled();
-        $this->admin->getObject(null)->willReturn(false);
+        $this->admin->getObject(null)->willReturn(null);
 
         $this->assertInstanceOf(Response::class, ($this->action)($request));
     }
@@ -147,7 +147,7 @@ final class GetShortObjectDescriptionActionTest extends TestCase
         ]);
 
         $this->admin->setUniqid('asdasd123')->shouldBeCalled();
-        $this->admin->getObject(null)->willReturn(false);
+        $this->admin->getObject(null)->willReturn(null);
         $this->admin->id(false)->willReturn('');
         $this->admin->toString(false)->willReturn('');
 
