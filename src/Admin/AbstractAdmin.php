@@ -32,6 +32,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelHiddenType;
 use Sonata\AdminBundle\Model\ModelManagerInterface;
 use Sonata\AdminBundle\Object\Metadata;
+use Sonata\AdminBundle\Object\MetadataInterface;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Route\RouteGeneratorInterface;
 use Sonata\AdminBundle\Security\Handler\AclSecurityHandlerInterface;
@@ -1781,10 +1782,6 @@ EOT;
         foreach ($this->getExtensions() as $extension) {
             $params = $extension->getPersistentParameters($this);
 
-            if (!\is_array($params)) {
-                throw new \RuntimeException(sprintf('The %s::getPersistentParameters must return an array', \get_class($extension)));
-            }
-
             $parameters = array_merge($parameters, $params);
         }
 
@@ -2256,7 +2253,7 @@ EOT;
         return $this->getSecurityHandler() instanceof AclSecurityHandlerInterface;
     }
 
-    public function getObjectMetadata($object): \Sonata\AdminBundle\Object\Metadata
+    public function getObjectMetadata($object): MetadataInterface
     {
         return new Metadata($this->toString($object));
     }
