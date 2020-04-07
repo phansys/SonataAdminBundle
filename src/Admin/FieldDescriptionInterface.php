@@ -82,9 +82,9 @@ interface FieldDescriptionInterface
     /**
      * return the template name.
      *
-     * @return string the template name
+     * @return string|null the template name
      */
-    public function getTemplate(): string;
+    public function getTemplate(): ?string;
 
     /**
      * return the field type, the type is a mandatory field as it used to select the correct template

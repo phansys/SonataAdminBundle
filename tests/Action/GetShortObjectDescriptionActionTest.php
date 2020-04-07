@@ -70,7 +70,8 @@ final class GetShortObjectDescriptionActionTest extends TestCase
             'uniqid' => 'asdasd123',
         ]);
 
-        $this->pool->getInstance('sonata.post.admin')->willReturn(null);
+        $this->pool->getInstance('sonata.post.admin')
+            ->willThrow(new \InvalidArgumentException());
         $this->admin->setRequest(Argument::type(Request::class))->shouldNotBeCalled();
 
         $this->expectException(NotFoundHttpException::class);

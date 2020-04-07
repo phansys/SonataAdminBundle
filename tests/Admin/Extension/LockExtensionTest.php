@@ -147,6 +147,7 @@ class LockExtensionTest extends TestCase
 
     public function testPreUpdateIfAdminHasNoRequest(): void
     {
+        $this->configureAdmin();
         $this->modelManager->lock()->shouldNotBeCalled();
 
         $this->lockExtension->preUpdate($this->admin->reveal(), $this->object);
@@ -213,8 +214,8 @@ class LockExtensionTest extends TestCase
     }
 
     private function configureAdmin(
-        ?string $uniqid = null,
-        ?Request $request = null,
+        string $uniqid = null,
+        Request $request = null,
         $modelManager = null
     ): void {
         $this->admin->getUniqid()->willReturn($uniqid);

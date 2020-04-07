@@ -207,7 +207,7 @@ abstract class BaseFieldDescription implements FieldDescriptionInterface
         $this->template = $template;
     }
 
-    public function getTemplate(): string
+    public function getTemplate(): ?string
     {
         return $this->template;
     }

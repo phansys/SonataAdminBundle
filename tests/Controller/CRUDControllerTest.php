@@ -435,11 +435,12 @@ class CRUDControllerTest extends TestCase
 
     public function testConfigureWithException2(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('You have requested a non-existent service "nonexistent.admin".');
-
         $this->pool->setAdminServiceIds(['nonexistent.admin']);
         $this->request->attributes->set('_sonata_admin', 'nonexistent.admin');
+
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Unable to find the admin class related to the current controller (Sonata\AdminBundle\Controller\CRUDController)');
+
         $this->protectedTestedMethods['configure']->invoke($this->controller);
     }
 
@@ -796,6 +797,10 @@ class CRUDControllerTest extends TestCase
         $show->expects($this->once())
             ->method('getElements')
             ->willReturn(['field' => 'fielddata']);
+
+        $show->expects($this->once())
+            ->method('count')
+            ->willReturn(1);
 
         $this->assertInstanceOf(Response::class, $this->controller->showAction($this->request));
 

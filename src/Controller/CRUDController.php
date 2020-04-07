@@ -634,7 +634,7 @@ class CRUDController extends Controller
             'action' => 'show',
             'object' => $object,
             'elements' => $fields,
-        ], null);
+        ]);
     }
 
     /**
@@ -1008,9 +1008,9 @@ class CRUDController extends Controller
             ));
         }
 
-        $this->admin = $this->container->get('sonata.admin.pool')->getAdminByAdminCode($adminCode);
-
-        if (!$this->admin) {
+        try {
+            $this->admin = $this->container->get('sonata.admin.pool')->getAdminByAdminCode($adminCode);
+        } catch (\InvalidArgumentException $e) {
             throw new \RuntimeException(sprintf(
                 'Unable to find the admin class related to the current controller (%s)',
                 static::class

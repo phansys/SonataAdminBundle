@@ -1258,7 +1258,7 @@ EOT
 
         $this->fieldDescription
             ->method('getTemplate')
-            ->willReturnCallback(static function () use ($type): string {
+            ->willReturnCallback(static function () use ($type): ?string {
                 switch ($type) {
                     case 'boolean':
                         return '@SonataAdmin/CRUD/show_boolean.html.twig';
@@ -1285,7 +1285,7 @@ EOT
                     case 'html':
                         return '@SonataAdmin/CRUD/show_html.html.twig';
                     default:
-                        return '@SonataAdmin/CRUD/base_show_field.html.twig';
+                        return null;
                 }
             });
 

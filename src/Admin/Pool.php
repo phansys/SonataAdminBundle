@@ -183,9 +183,9 @@ class Pool
      *
      * @param string $class
      *
-     * @return \Sonata\AdminBundle\Admin\AdminInterface|null
+     * @return AdminInterface|null
      */
-    public function getAdminByClass(string $class): ?\Sonata\AdminBundle\Admin\AdminInterface
+    public function getAdminByClass(string $class): ?AdminInterface
     {
         if (!$this->hasAdminByClass($class)) {
             return null;
@@ -222,7 +222,7 @@ class Pool
      *
      * @throws \InvalidArgumentException if the root admin code is an empty string
      */
-    public function getAdminByAdminCode(string $adminCode): ?\Sonata\AdminBundle\Admin\AdminInterface
+    public function getAdminByAdminCode(string $adminCode): AdminInterface
     {
         $codes = explode('|', $adminCode);
         $code = trim(array_shift($codes));
@@ -281,7 +281,7 @@ class Pool
      *
      * @return AdminInterface
      */
-    public function getInstance(string $id): \Sonata\AdminBundle\Admin\AdminInterface
+    public function getInstance(string $id): AdminInterface
     {
         if (!\in_array($id, $this->adminServiceIds, true)) {
             $msg = sprintf('Admin service "%s" not found in admin pool.', $id);
@@ -323,7 +323,7 @@ class Pool
     /**
      * @return ContainerInterface|null
      */
-    public function getContainer(): \Symfony\Component\DependencyInjection\ContainerInterface
+    public function getContainer(): ContainerInterface
     {
         return $this->container;
     }
@@ -398,7 +398,7 @@ class Pool
         return $default;
     }
 
-    public function getPropertyAccessor(): \Symfony\Component\PropertyAccess\PropertyAccessorInterface
+    public function getPropertyAccessor(): PropertyAccessorInterface
     {
         if (null === $this->propertyAccessor) {
             $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
