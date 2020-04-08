@@ -23,8 +23,6 @@ interface FieldDescriptionRegistryInterface
     /**
      * Return FormFieldDescription.
      *
-     * @param string $name
-     *
      * @return FieldDescriptionInterface
      */
     public function getFormFieldDescription(string $name): \Sonata\AdminBundle\Admin\FieldDescriptionInterface;
@@ -38,38 +36,26 @@ interface FieldDescriptionRegistryInterface
 
     /**
      * Returns true if the admin has a FieldDescription with the given $name.
-     *
-     * @param string $name
-     *
-     * @return bool
      */
     public function hasShowFieldDescription(string $name): bool;
 
     /**
      * Adds a FieldDescription.
-     *
-     * @param string $name
      */
     public function addShowFieldDescription(string $name, FieldDescriptionInterface $fieldDescription);
 
     /**
      * Removes a ShowFieldDescription.
-     *
-     * @param string $name
      */
     public function removeShowFieldDescription(string $name);
 
     /**
      * Adds a list FieldDescription.
-     *
-     * @param string $name
      */
     public function addListFieldDescription(string $name, FieldDescriptionInterface $fieldDescription);
 
     /**
      * Removes a list FieldDescription.
-     *
-     * @param string $name
      */
     public function removeListFieldDescription(string $name);
 
@@ -82,24 +68,16 @@ interface FieldDescriptionRegistryInterface
 
     /**
      * Returns true if the filter FieldDescription exists.
-     *
-     * @param string $name
-     *
-     * @return bool
      */
     public function hasFilterFieldDescription(string $name): bool;
 
     /**
      * Adds a filter FieldDescription.
-     *
-     * @param string $name
      */
     public function addFilterFieldDescription(string $name, FieldDescriptionInterface $fieldDescription);
 
     /**
      * Removes a filter FieldDescription.
-     *
-     * @param string $name
      */
     public function removeFilterFieldDescription(string $name);
 
@@ -112,8 +90,6 @@ interface FieldDescriptionRegistryInterface
 
     /**
      * Returns a filter FieldDescription.
-     *
-     * @param string $name
      *
      * @return FieldDescriptionInterface|null
      */

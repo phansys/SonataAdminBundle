@@ -546,11 +546,6 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
      */
     private $filterPersister;
 
-    /**
-     * @param string $code
-     * @param string $class
-     * @param string $baseControllerName
-     */
     public function __construct(string $code, string $class, string $baseControllerName)
     {
         $this->code = $code;
@@ -806,10 +801,6 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
         return $this->parentAssociationMapping;
     }
 
-    /**
-     * @param string $code
-     * @param string $value
-     */
     final public function addParentAssociationMapping(string $code, string $value): void
     {
         $this->parentAssociationMapping[$code] = $value;
@@ -981,8 +972,8 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
     {
         if (!$this->hasActiveSubClass()) {
             throw new \LogicException(sprintf(
-               'Admin "%s" has no active subclass.',
-               static::class
+                'Admin "%s" has no active subclass.',
+                static::class
             ));
         }
 
@@ -993,8 +984,8 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
     {
         if (!$this->hasActiveSubClass()) {
             throw new \LogicException(sprintf(
-               'Admin "%s" has no active subclass.',
-               static::class
+                'Admin "%s" has no active subclass.',
+                static::class
             ));
         }
 
@@ -1002,8 +993,8 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
 
         if (!$this->hasSubClass($subClass)) {
             throw new \LogicException(sprintf(
-               'Admin "%s" has no active subclass.',
-               static::class
+                'Admin "%s" has no active subclass.',
+                static::class
             ));
         }
 
@@ -1279,8 +1270,6 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
     }
 
     /**
-     * @param string $action
-     *
      * @return ItemInterface
      */
     public function getSideMenu(string $action, AdminInterface $childAdmin = null)
@@ -1354,33 +1343,21 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
         $this->persistFilters = true;
     }
 
-    /**
-     * @param int $maxPerPage
-     */
     public function setMaxPerPage(int $maxPerPage): void
     {
         $this->maxPerPage = $maxPerPage;
     }
 
-    /**
-     * @return int
-     */
     public function getMaxPerPage(): int
     {
         return $this->maxPerPage;
     }
 
-    /**
-     * @param int $maxPageLinks
-     */
     public function setMaxPageLinks(int $maxPageLinks): void
     {
         $this->maxPageLinks = $maxPageLinks;
     }
 
-    /**
-     * @return int
-     */
     public function getMaxPageLinks(): int
     {
         return $this->maxPageLinks;
@@ -1407,9 +1384,6 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
         }
     }
 
-    /**
-     * @param array $group
-     */
     public function reorderFormGroup(array $group, array $keys): void
     {
         $formGroups = $this->getFormGroups();
@@ -1519,10 +1493,6 @@ EOT;
 
     /**
      * Returns true if the admin has a FieldDescription with the given $name.
-     *
-     * @param string $name
-     *
-     * @return bool
      */
     public function hasFormFieldDescription(string $name): bool
     {
@@ -1558,8 +1528,6 @@ EOT;
 
     /**
      * Returns the form FieldDescription with the given $name.
-     *
-     * @param string $name
      *
      * @return FieldDescriptionInterface
      */
@@ -1840,11 +1808,6 @@ EOT;
      * Translate a message id.
      *
      * NEXT_MAJOR: remove this method
-     *
-     * @param string      $id
-     * @param int         $count
-     * @param string|null $domain
-     * @param string|null $locale
      *
      * @return string the translated string
      *
@@ -2500,10 +2463,7 @@ EOT;
     /**
      * urlize the given word.
      *
-     * @param string $word
-     * @param string $sep  the separator
-     *
-     * @return string
+     * @param string $sep the separator
      */
     final protected function urlize(string $word, string $sep = '_'): string
     {
@@ -2517,8 +2477,6 @@ EOT;
 
     /**
      * Returns a list of default filters.
-     *
-     * @return array
      */
     final protected function getDefaultFilterValues(): array
     {
@@ -2577,8 +2535,6 @@ EOT;
 
     /**
      * Configures the tab menu in your admin.
-     *
-     * @param string $action
      */
     protected function configureTabMenu(MenuItemInterface $menu, string $action, AdminInterface $childAdmin = null): void
     {

@@ -47,8 +47,6 @@ class AdminHelper
     }
 
     /**
-     * @param string $elementId
-     *
      * @throws \RuntimeException
      *
      * @return FormBuilderInterface|null
@@ -65,8 +63,6 @@ class AdminHelper
     }
 
     /**
-     * @param string $elementId
-     *
      * @return FormView|null
      */
     public function getChildFormView(FormView $formView, string $elementId)
@@ -85,8 +81,6 @@ class AdminHelper
      *
      * @deprecated
      *
-     * @param string $code
-     *
      * @return AdminInterface
      */
     public function getAdmin(string $code): \Sonata\AdminBundle\Admin\AdminInterface
@@ -98,13 +92,8 @@ class AdminHelper
      * Note:
      *   This code is ugly, but there is no better way of doing it.
      *
-     * @param object $subject
-     * @param string $elementId
-     *
      * @throws \RuntimeException
      * @throws \Exception
-     *
-     * @return array
      */
     public function appendFormFieldElement(AdminInterface $admin, object $subject, string $elementId): array
     {
@@ -221,8 +210,6 @@ class AdminHelper
     /**
      * Add a new instance to the related FieldDescriptionInterface value.
      *
-     * @param object $object
-     *
      * @throws \RuntimeException
      */
     public function addNewInstance(object $object, FieldDescriptionInterface $fieldDescription): void
@@ -276,8 +263,6 @@ class AdminHelper
      * @param mixed  $entity
      *
      * @throws \Exception
-     *
-     * @return string
      */
     public function getElementAccessPath(string $elementId, $entity): string
     {
@@ -311,10 +296,6 @@ class AdminHelper
 
     /**
      * Recursively find the class name of the admin responsible for the element at the end of an association chain.
-     *
-     * @param array $elements
-     *
-     * @return string
      */
     protected function getEntityClassName(AdminInterface $admin, array $elements): string
     {

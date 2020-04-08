@@ -54,7 +54,7 @@ interface FieldDescriptionInterface
     /**
      * Define an option, an option is has a name and a value.
      *
-     * @param mixed  $value
+     * @param mixed $value
      */
     public function setOption(string $name, $value);
 

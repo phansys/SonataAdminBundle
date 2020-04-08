@@ -28,8 +28,6 @@ interface AdminTreeInterface
     /**
      * Returns the depth of the admin.
      * e.g. 0 if not a child; 2 if child of a child; etc...
-     *
-     * @return int
      */
     public function getChildDepth(): int;
 

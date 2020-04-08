@@ -33,8 +33,6 @@ interface UrlGeneratorInterface
 
     /**
      * Return the parameter name used to represent the id in the url.
-     *
-     * @return string
      */
     public function getRouterIdParameter(): string;
 
@@ -43,10 +41,7 @@ interface UrlGeneratorInterface
     /**
      * Generates the object url with the given $name.
      *
-     * @param string               $name
-     * @param object               $object
      * @param array<string, mixed> $parameters
-     * @param int                  $absolute
      *
      * @return string return a complete url
      */
@@ -60,9 +55,7 @@ interface UrlGeneratorInterface
     /**
      * Generates a url for the given parameters.
      *
-     * @param string               $name
      * @param array<string, mixed> $parameters
-     * @param int                  $absolute
      *
      * @return string return a complete url
      */
@@ -71,9 +64,7 @@ interface UrlGeneratorInterface
     /**
      * Generates a url for the given parameters.
      *
-     * @param string               $name
      * @param array<string, mixed> $parameters
-     * @param int                  $absolute
      *
      * @return array return url parts: 'route', 'routeParameters', 'routeAbsolute'
      */

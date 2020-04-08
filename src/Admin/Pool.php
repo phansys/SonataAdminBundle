@@ -70,11 +70,6 @@ class Pool
      */
     protected $propertyAccessor;
 
-    /**
-     * @param string $title
-     * @param string $logoTitle
-     * @param array  $options
-     */
     public function __construct(
         ContainerInterface $container,
         string $title,
@@ -89,9 +84,6 @@ class Pool
         $this->propertyAccessor = $propertyAccessor;
     }
 
-    /**
-     * @return array
-     */
     public function getGroups(): array
     {
         $groups = $this->adminGroups;
@@ -107,19 +99,12 @@ class Pool
 
     /**
      * Returns whether an admin group exists or not.
-     *
-     * @param string $group
-     *
-     * @return bool
      */
     public function hasGroup(string $group): bool
     {
         return isset($this->adminGroups[$group]);
     }
 
-    /**
-     * @return array
-     */
     public function getDashboardGroups(): array
     {
         $groups = $this->adminGroups;
@@ -153,8 +138,6 @@ class Pool
     /**
      * Returns all admins related to the given $group.
      *
-     * @param string $group
-     *
      * @throws \InvalidArgumentException
      *
      * @return AdminInterface[]
@@ -180,10 +163,6 @@ class Pool
 
     /**
      * Return the admin related to the given $class.
-     *
-     * @param string $class
-     *
-     * @return AdminInterface|null
      */
     public function getAdminByClass(string $class): ?AdminInterface
     {
@@ -206,11 +185,6 @@ class Pool
         return $this->getInstance($this->adminClasses[$class][0]);
     }
 
-    /**
-     * @param string $class
-     *
-     * @return bool
-     */
     public function hasAdminByClass(string $class): bool
     {
         return isset($this->adminClasses[$class]);
@@ -275,11 +249,7 @@ class Pool
     /**
      * Returns a new admin instance depends on the given code.
      *
-     * @param string $id
-     *
      * @throws \InvalidArgumentException
-     *
-     * @return AdminInterface
      */
     public function getInstance(string $id): AdminInterface
     {
@@ -333,9 +303,6 @@ class Pool
         $this->adminGroups = $adminGroups;
     }
 
-    /**
-     * @return array
-     */
     public function getAdminGroups(): array
     {
         return $this->adminGroups;
@@ -346,9 +313,6 @@ class Pool
         $this->adminServiceIds = $adminServiceIds;
     }
 
-    /**
-     * @return array
-     */
     public function getAdminServiceIds(): array
     {
         return $this->adminServiceIds;
@@ -359,33 +323,23 @@ class Pool
         $this->adminClasses = $adminClasses;
     }
 
-    /**
-     * @return array
-     */
     public function getAdminClasses(): array
     {
         return $this->adminClasses;
     }
 
-    /**
-     * @return string
-     */
     public function getTitleLogo(): string
     {
         return $this->titleLogo;
     }
 
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
     /**
-     * @param string $name
-     * @param mixed  $default
+     * @param mixed $default
      *
      * @return mixed
      */

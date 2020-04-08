@@ -30,27 +30,17 @@ class FieldDescriptionCollection implements \ArrayAccess, \Countable
         $this->elements[$fieldDescription->getName()] = $fieldDescription;
     }
 
-    /**
-     * @return array
-     */
     public function getElements(): array
     {
         return $this->elements;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return bool
-     */
     public function has(string $name): bool
     {
         return \array_key_exists($name, $this->elements);
     }
 
     /**
-     * @param string $name
-     *
      * @throws \InvalidArgumentException
      *
      * @return FieldDescriptionInterface
@@ -64,9 +54,6 @@ class FieldDescriptionCollection implements \ArrayAccess, \Countable
         throw new \InvalidArgumentException(sprintf('Element "%s" does not exist.', $name));
     }
 
-    /**
-     * @param string $name
-     */
     public function remove(string $name): void
     {
         if ($this->has($name)) {

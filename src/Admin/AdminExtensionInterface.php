@@ -42,8 +42,6 @@ interface AdminExtensionInterface
      *
      * NEXT_MAJOR: remove this method.
      *
-     * @param string $action
-     *
      * @deprecated
      */
     public function configureSideMenu(
@@ -55,8 +53,6 @@ interface AdminExtensionInterface
 
     /**
      * Builds the tab menu.
-     *
-     * @param string $action
      */
     public function configureTabMenu(
         AdminInterface $admin,
@@ -65,34 +61,22 @@ interface AdminExtensionInterface
         AdminInterface $childAdmin = null
     );
 
-    /**
-     * @param object $object
-     */
     public function validate(AdminInterface $admin, ErrorElement $errorElement, object $object);
 
-    /**
-     * @param string $context
-     */
     public function configureQuery(AdminInterface $admin, ProxyQueryInterface $query, string $context = 'list');
 
     /**
      * Get a chance to modify a newly created instance.
-     *
-     * @param object $object
      */
     public function alterNewInstance(AdminInterface $admin, object $object);
 
     /**
      * Get a chance to modify object instance.
-     *
-     * @param object $object
      */
     public function alterObject(AdminInterface $admin, object $object);
 
     /**
      * Get a chance to add persistent parameters.
-     *
-     * @return array
      */
     public function getPersistentParameters(AdminInterface $admin): array;
 
@@ -113,34 +97,16 @@ interface AdminExtensionInterface
      */
     public function configureExportFields(AdminInterface $admin, array $fields): array;
 
-    /**
-     * @param object $object
-     */
     public function preUpdate(AdminInterface $admin, object $object);
 
-    /**
-     * @param object $object
-     */
     public function postUpdate(AdminInterface $admin, object $object);
 
-    /**
-     * @param object $object
-     */
     public function prePersist(AdminInterface $admin, object $object);
 
-    /**
-     * @param object $object
-     */
     public function postPersist(AdminInterface $admin, object $object);
 
-    /**
-     * @param object $object
-     */
     public function preRemove(AdminInterface $admin, object $object);
 
-    /**
-     * @param object $object
-     */
     public function postRemove(AdminInterface $admin, object $object);
 
     /**

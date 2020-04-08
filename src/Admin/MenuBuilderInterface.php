@@ -25,8 +25,6 @@ interface MenuBuilderInterface
     /**
      * Build the tab menu related to the current action.
      *
-     * @param string $action
-     *
      * @return ItemInterface|bool
      */
     public function buildTabMenu(string $action, AdminInterface $childAdmin = null);

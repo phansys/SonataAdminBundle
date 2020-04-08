@@ -46,8 +46,6 @@ interface ParentAdminInterface
     /**
      * Returns an admin child with the given $code.
      *
-     * @param string $code
-     *
      * @return AdminInterface|null
      */
     public function getChild(string $code): ?\Sonata\AdminBundle\Admin\AdminInterface;

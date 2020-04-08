@@ -23,58 +23,30 @@ interface LifecycleHookProviderInterface
 {
     /**
      * This method should call preUpdate, do the update, and call postUpdate.
-     *
-     * @param object $object
-     *
-     * @return object
      */
     public function update(object $object): object;
 
     /**
      * This method should call prePersist, do the creation, and call postPersist.
-     *
-     * @param object $object
-     *
-     * @return object
      */
     public function create(object $object): object;
 
     /**
      * This method should call preRemove, do the removal, and call postRemove.
-     *
-     * @param object $object
      */
     public function delete(object $object);
 
     public function preValidate(object $object);
 
-    /**
-     * @param object $object
-     */
     public function preUpdate(object $object);
 
-    /**
-     * @param object $object
-     */
     public function postUpdate(object $object);
 
-    /**
-     * @param object $object
-     */
     public function prePersist(object $object);
 
-    /**
-     * @param object $object
-     */
     public function postPersist(object $object);
 
-    /**
-     * @param object $object
-     */
     public function preRemove(object $object);
 
-    /**
-     * @param object $object
-     */
     public function postRemove(object $object);
 }
