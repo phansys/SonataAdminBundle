@@ -16,10 +16,11 @@ namespace Sonata\AdminBundle\Tests\App\Model;
 use Sonata\AdminBundle\Admin\FieldDescriptionInterface;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
+use Sonata\AdminBundle\Model\LockInterface;
 use Sonata\AdminBundle\Model\ModelManagerInterface;
 use Sonata\AdminBundle\Tests\App\Admin\FieldDescription;
 
-final class ModelManager implements ModelManagerInterface
+class ModelManager implements ModelManagerInterface, LockInterface
 {
     private $repository;
 
@@ -175,6 +176,15 @@ final class ModelManager implements ModelManagerInterface
     }
 
     public function addIdentifiersToQuery($class, ProxyQueryInterface $query, array $idx)
+    {
+    }
+
+    public function getLockVersion($object)
+    {
+        return null;
+    }
+
+    public function lock($object, $expectedVersion)
     {
     }
 }
