@@ -2031,7 +2031,7 @@ EOT;
         $this->managerType = $type;
     }
 
-    public function getObjectIdentifier(): string
+    public function getObjectIdentifier()
     {
         return $this->getCode();
     }
@@ -2103,12 +2103,12 @@ EOT;
         return $this->getModelManager()->getUrlsafeIdentifier($entity);
     }
 
-    public function getNormalizedIdentifier($entity): string
+    public function getNormalizedIdentifier($entity)
     {
         return $this->getModelManager()->getNormalizedIdentifier($entity);
     }
 
-    public function id($entity): string
+    public function id($entity)
     {
         return $this->getNormalizedIdentifier($entity);
     }
@@ -2480,7 +2480,7 @@ EOT;
         return $object && $this->id($object) && $this->hasAccess($action, $object);
     }
 
-    public function configureActionButtons(array $buttonList, string $action, ?object $object = null): array
+    public function configureActionButtons(array $buttonList, string $action, object $object = null): array
     {
         return $buttonList;
     }

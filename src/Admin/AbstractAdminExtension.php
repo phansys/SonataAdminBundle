@@ -125,7 +125,7 @@ abstract class AbstractAdminExtension implements AdminExtensionInterface
         AdminInterface $admin,
         array $list,
         string $action,
-        object $object
+        object $object = null
     ): array {
         return $list;
     }

@@ -152,7 +152,7 @@ interface AdminExtensionInterface
         AdminInterface $admin,
         array $list,
         string $action,
-        object $object
+        object $object = null
     ): array;
 
     /**

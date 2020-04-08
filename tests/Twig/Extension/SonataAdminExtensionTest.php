@@ -214,12 +214,12 @@ class SonataAdminExtensionTest extends TestCase
         $this->admin
             ->method('id')
             ->with($this->equalTo($this->object))
-            ->willReturn('12345');
+            ->willReturn(12345);
 
         $this->admin
             ->method('getNormalizedIdentifier')
             ->with($this->equalTo($this->object))
-            ->willReturn('12345');
+            ->willReturn(12345);
 
         $this->admin
             ->method('trans')
@@ -234,7 +234,7 @@ class SonataAdminExtensionTest extends TestCase
         $this->adminBar
             ->method('getNormalizedIdentifier')
             ->with($this->equalTo($this->object))
-            ->willReturn('12345');
+            ->willReturn(12345);
 
         $container
             ->method('get')

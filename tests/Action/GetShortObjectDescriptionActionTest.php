@@ -149,8 +149,8 @@ final class GetShortObjectDescriptionActionTest extends TestCase
 
         $this->admin->setUniqid('asdasd123')->shouldBeCalled();
         $this->admin->getObject(null)->willReturn(null);
-        $this->admin->id(false)->willReturn('');
-        $this->admin->toString(false)->willReturn('');
+        $this->admin->id(null)->willReturn('');
+        $this->admin->toString(null)->willReturn('');
 
         $response = ($this->action)($request);
 

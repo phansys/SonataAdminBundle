@@ -696,7 +696,7 @@ interface AdminInterface extends AccessRegistryInterface, FieldDescriptionRegist
      */
     public function isDefaultFilter(string $name): bool;
 
-    public function configureActionButtons(array $buttonList, string $action, ?object $object = null): array;
+    public function configureActionButtons(array $buttonList, string $action, object $object = null): array;
 
     /**
      * Check object existence and access, without throwing Exception.
