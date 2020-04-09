@@ -330,17 +330,15 @@ interface AdminInterface extends AccessRegistryInterface, FieldDescriptionRegist
 
     /**
      * Returns the uniqid.
-     *
-     * @return string
      */
-    public function getUniqid();
+    public function getUniqid(): string;
 
     /**
      * Returns the classname label.
      *
      * @return string the classname label
      */
-    public function getClassnameLabel();
+    public function getClassnameLabel(): string;
 
     /**
      * @param mixed $id
@@ -367,24 +365,22 @@ interface AdminInterface extends AccessRegistryInterface, FieldDescriptionRegist
      * Returns true if the list FieldDescription exists.
      *
      * @param string $name
-     *
-     * @return bool
      */
-    public function hasListFieldDescription($name);
+    public function hasListFieldDescription($name): bool;
 
     /**
      * Returns the collection of list FieldDescriptions.
      *
      * @return array
      */
-    public function getListFieldDescriptions();
+    public function getListFieldDescriptions(): array;
 
     /**
      * Returns the array of allowed export formats.
      *
      * @return string[]
      */
-    public function getExportFormats();
+    public function getExportFormats(): array;
 
     /**
      * Retuns a list of exported fields.
@@ -411,14 +407,12 @@ interface AdminInterface extends AccessRegistryInterface, FieldDescriptionRegist
      *
      * @return array<string, mixed>
      */
-    public function getFilterParameters();
+    public function getFilterParameters(): array;
 
     /**
      * Return true if the Admin is related to a subject.
-     *
-     * @return bool
      */
-    public function hasSubject();
+    public function hasSubject(): bool;
 
     /**
      * NEXT_MAJOR: remove this method.
@@ -444,33 +438,28 @@ interface AdminInterface extends AccessRegistryInterface, FieldDescriptionRegist
      */
     public function createObjectSecurity($object);
 
-    /**
-     * @return AdminInterface|null
-     */
-    public function getParent();
+    public function getParent(): ?self;
 
-    public function setParent(self $admin);
+    public function setParent(self $admin): void;
 
     /**
      * Returns true if the Admin class has an Parent Admin defined.
-     *
-     * @return bool
      */
-    public function isChild();
+    public function isChild(): bool;
 
     /**
      * Set the translation domain.
      *
      * @param string $translationDomain the translation domain
      */
-    public function setTranslationDomain($translationDomain);
+    public function setTranslationDomain($translationDomain): void;
 
     /**
      * Returns the translation domain.
      *
      * @return string the translation domain
      */
-    public function getTranslationDomain();
+    public function getTranslationDomain(): string;
 
     /**
      * Return the form groups.
@@ -534,10 +523,8 @@ interface AdminInterface extends AccessRegistryInterface, FieldDescriptionRegist
 
     /**
      * Returns true if this admin uses ACL.
-     *
-     * @return bool
      */
-    public function isAclEnabled();
+    public function isAclEnabled(): bool;
 
     /**
      * Returns list of supported sub classes.
@@ -554,23 +541,19 @@ interface AdminInterface extends AccessRegistryInterface, FieldDescriptionRegist
     /**
      * Sets the list of supported sub classes.
      */
-    public function setSubClasses(array $subClasses);
+    public function setSubClasses(array $subClasses): void;
 
     /**
      * Returns true if the admin has the sub classes.
      *
      * @param string $name The name of the sub class
-     *
-     * @return bool
      */
-    public function hasSubClass($name);
+    public function hasSubClass($name): bool;
 
     /**
      * Returns true if a subclass is currently active.
-     *
-     * @return bool
      */
-    public function hasActiveSubClass();
+    public function hasActiveSubClass(): bool;
 
     /**
      * Returns the currently active sub class.
@@ -595,24 +578,22 @@ interface AdminInterface extends AccessRegistryInterface, FieldDescriptionRegist
 
     /**
      * Returns Admin`s label.
-     *
-     * @return string
      */
-    public function getLabel();
+    public function getLabel(): ?string;
 
     /**
      * Returns an array of persistent parameters.
      *
      * @return array<string, mixed>
      */
-    public function getPersistentParameters();
+    public function getPersistentParameters(): array;
 
     public function getPersistentParameter(string $name);
 
     /**
      * Set the current child status.
      */
-    public function setCurrentChild(bool $currentChild);
+    public function setCurrentChild(bool $currentChild): void;
 
     /**
      * Returns the current child status.
@@ -663,10 +644,8 @@ interface AdminInterface extends AccessRegistryInterface, FieldDescriptionRegist
 
     /**
      * Get the list of actions that can be accessed directly from the dashboard.
-     *
-     * @return array
      */
-    public function getDashboardActions();
+    public function getDashboardActions(): array;
 
     /**
      * Check the current request is given route or not.
