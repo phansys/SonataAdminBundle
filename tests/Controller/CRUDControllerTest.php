@@ -700,7 +700,7 @@ class CRUDControllerTest extends TestCase
 
         $this->admin->expects($this->once())
             ->method('getObject')
-            ->willReturn(false);
+            ->willReturn(null);
 
         $this->controller->showAction($this->request);
     }
@@ -896,7 +896,7 @@ class CRUDControllerTest extends TestCase
 
         $this->admin->expects($this->once())
             ->method('getObject')
-            ->willReturn(false);
+            ->willReturn(null);
 
         $this->controller->deleteAction($this->request);
     }
@@ -1308,7 +1308,7 @@ class CRUDControllerTest extends TestCase
 
         $this->admin->expects($this->once())
             ->method('getObject')
-            ->willReturn(false);
+            ->willReturn(null);
 
         $this->controller->editAction($this->request);
     }
@@ -2610,7 +2610,7 @@ class CRUDControllerTest extends TestCase
 
         $this->admin->expects($this->once())
             ->method('getObject')
-            ->willReturn(false);
+            ->willReturn(null);
 
         $this->controller->historyAction($this->request);
     }
@@ -2713,7 +2713,7 @@ class CRUDControllerTest extends TestCase
 
         $this->admin->expects($this->once())
             ->method('getObject')
-            ->willReturn(false);
+            ->willReturn(null);
 
         $this->controller->aclAction($this->request);
     }
@@ -3017,7 +3017,7 @@ class CRUDControllerTest extends TestCase
 
         $this->admin->expects($this->once())
             ->method('getObject')
-            ->willReturn(false);
+            ->willReturn(null);
 
         $this->controller->historyViewRevisionAction($this->request, null);
     }
@@ -3185,7 +3185,7 @@ class CRUDControllerTest extends TestCase
 
         $this->admin->expects($this->once())
             ->method('getObject')
-            ->willReturn(false);
+            ->willReturn(null);
 
         $this->controller->historyCompareRevisionsAction($this->request, null, null);
     }

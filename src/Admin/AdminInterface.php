@@ -344,20 +344,15 @@ interface AdminInterface extends AccessRegistryInterface, FieldDescriptionRegist
 
     /**
      * @param mixed $id
-     *
-     * @return object|null
      */
-    public function getObject($id);
+    public function getObject($id): ?object;
 
     /**
      * @param object|null $subject
      */
     public function setSubject($subject);
 
-    /**
-     * @return object|null
-     */
-    public function getSubject();
+    public function getSubject(): ?object;
 
     /**
      * Returns a list FieldDescription.
