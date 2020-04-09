@@ -1032,7 +1032,7 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
         return $actions;
     }
 
-    public function getRoutes(): \Sonata\AdminBundle\Route\RouteCollection
+    public function getRoutes(): RouteCollection
     {
         $this->buildRoutes();
 
@@ -1134,7 +1134,7 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
         return $object;
     }
 
-    public function getFormBuilder(): \Symfony\Component\Form\FormBuilderInterface
+    public function getFormBuilder(): FormBuilderInterface
     {
         $this->formOptions['data_class'] = $this->getClass();
 
@@ -1198,14 +1198,14 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
         return $object;
     }
 
-    public function getForm(): ?\Symfony\Component\Form\Form
+    public function getForm(): ?Form
     {
         $this->buildForm();
 
         return $this->form;
     }
 
-    public function getList(): \Sonata\AdminBundle\Admin\FieldDescriptionCollection
+    public function getList(): FieldDescriptionCollection
     {
         $this->buildList();
 
@@ -1215,7 +1215,7 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
     /**
      * @final since sonata-project/admin-bundle 3.63.0
      */
-    public function createQuery($context = 'list'): \Sonata\AdminBundle\Datagrid\ProxyQueryInterface
+    public function createQuery($context = 'list'): ProxyQueryInterface
     {
         if (\func_num_args() > 0) {
             @trigger_error(
@@ -1234,7 +1234,7 @@ abstract class AbstractAdmin implements AdminInterface, DomainObjectInterface, A
         return $query;
     }
 
-    public function getDatagrid(): ?\Sonata\AdminBundle\Datagrid\DatagridInterface
+    public function getDatagrid(): ?DatagridInterface
     {
         $this->buildDatagrid();
 
@@ -1486,7 +1486,7 @@ EOT;
         return $this->formFieldDescriptions;
     }
 
-    public function getFormFieldDescription(string $name): \Sonata\AdminBundle\Admin\FieldDescriptionInterface
+    public function getFormFieldDescription(string $name): ?FieldDescriptionInterface
     {
         return $this->hasFormFieldDescription($name) ? $this->formFieldDescriptions[$name] : null;
     }
@@ -1528,10 +1528,8 @@ EOT;
 
     /**
      * Returns the form FieldDescription with the given $name.
-     *
-     * @return FieldDescriptionInterface
      */
-    public function getShowFieldDescription(string $name): \Sonata\AdminBundle\Admin\FieldDescriptionInterface
+    public function getShowFieldDescription(string $name): FieldDescriptionInterface
     {
         $this->buildShow();
 
@@ -1582,7 +1580,7 @@ EOT;
         unset($this->listFieldDescriptions[$name]);
     }
 
-    public function getFilterFieldDescription(string $name): ?\Sonata\AdminBundle\Admin\FieldDescriptionInterface
+    public function getFilterFieldDescription(string $name): ?FieldDescriptionInterface
     {
         return $this->hasFilterFieldDescription($name) ? $this->filterFieldDescriptions[$name] : null;
     }
@@ -1652,7 +1650,7 @@ EOT;
         return $this->children;
     }
 
-    public function getChild(string $code): ?\Sonata\AdminBundle\Admin\AdminInterface
+    public function getChild(string $code): ?AdminInterface
     {
         return $this->hasChild($code) ? $this->children[$code] : null;
     }
@@ -1662,12 +1660,12 @@ EOT;
         $this->parent = $parent;
     }
 
-    public function getParent(): ?\Sonata\AdminBundle\Admin\AdminInterface
+    public function getParent(): ?AdminInterface
     {
         return $this->parent;
     }
 
-    final public function getRootAncestor(): \Sonata\AdminBundle\Admin\AdminInterface
+    final public function getRootAncestor(): AdminInterface
     {
         $parent = $this;
 
@@ -1886,7 +1884,7 @@ EOT;
         }
     }
 
-    public function getRequest(): \Symfony\Component\HttpFoundation\Request
+    public function getRequest(): Request
     {
         if (!$this->request) {
             throw new \RuntimeException('The Request object has not been set');

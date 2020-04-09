@@ -29,7 +29,7 @@ interface UrlGeneratorInterface
      *
      * @return RouteCollection the list of available urls
      */
-    public function getRoutes(): \Sonata\AdminBundle\Route\RouteCollection;
+    public function getRoutes(): RouteCollection;
 
     /**
      * Return the parameter name used to represent the id in the url.

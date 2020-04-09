@@ -22,10 +22,8 @@ interface FieldDescriptionRegistryInterface
 {
     /**
      * Return FormFieldDescription.
-     *
-     * @return FieldDescriptionInterface
      */
-    public function getFormFieldDescription(string $name): \Sonata\AdminBundle\Admin\FieldDescriptionInterface;
+    public function getFormFieldDescription(string $name): ?FieldDescriptionInterface;
 
     /**
      * Build and return the collection of form FieldDescription.
@@ -61,10 +59,8 @@ interface FieldDescriptionRegistryInterface
 
     /**
      * Returns a list depend on the given $object.
-     *
-     * @return FieldDescriptionCollection
      */
-    public function getList(): \Sonata\AdminBundle\Admin\FieldDescriptionCollection;
+    public function getList(): FieldDescriptionCollection;
 
     /**
      * Returns true if the filter FieldDescription exists.
@@ -90,8 +86,6 @@ interface FieldDescriptionRegistryInterface
 
     /**
      * Returns a filter FieldDescription.
-     *
-     * @return FieldDescriptionInterface|null
      */
-    public function getFilterFieldDescription(string $name): ?\Sonata\AdminBundle\Admin\FieldDescriptionInterface;
+    public function getFilterFieldDescription(string $name): ?FieldDescriptionInterface;
 }

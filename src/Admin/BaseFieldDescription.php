@@ -227,7 +227,7 @@ abstract class BaseFieldDescription implements FieldDescriptionInterface
         $this->parent = $parent;
     }
 
-    public function getParent(): ?\Sonata\AdminBundle\Admin\AdminInterface
+    public function getParent(): ?AdminInterface
     {
         return $this->parent;
     }
@@ -253,7 +253,7 @@ abstract class BaseFieldDescription implements FieldDescriptionInterface
         $this->associationAdmin->setParentFieldDescription($this);
     }
 
-    public function getAssociationAdmin(): ?\Sonata\AdminBundle\Admin\AdminInterface
+    public function getAssociationAdmin(): ?AdminInterface
     {
         return $this->associationAdmin;
     }
@@ -321,7 +321,7 @@ abstract class BaseFieldDescription implements FieldDescriptionInterface
         $this->admin = $admin;
     }
 
-    public function getAdmin(): \Sonata\AdminBundle\Admin\AdminInterface
+    public function getAdmin(): AdminInterface
     {
         return $this->admin;
     }

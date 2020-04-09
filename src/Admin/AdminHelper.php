@@ -83,7 +83,7 @@ class AdminHelper
      *
      * @return AdminInterface
      */
-    public function getAdmin(string $code): \Sonata\AdminBundle\Admin\AdminInterface
+    public function getAdmin(string $code): AdminInterface
     {
         return $this->pool->getInstance($code);
     }

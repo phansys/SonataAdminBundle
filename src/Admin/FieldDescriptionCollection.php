@@ -42,10 +42,8 @@ class FieldDescriptionCollection implements \ArrayAccess, \Countable
 
     /**
      * @throws \InvalidArgumentException
-     *
-     * @return FieldDescriptionInterface
      */
-    public function get(string $name): \Sonata\AdminBundle\Admin\FieldDescriptionInterface
+    public function get(string $name): FieldDescriptionInterface
     {
         if ($this->has($name)) {
             return $this->elements[$name];
@@ -66,7 +64,7 @@ class FieldDescriptionCollection implements \ArrayAccess, \Countable
         return $this->has($offset);
     }
 
-    public function offsetGet($offset): \Sonata\AdminBundle\Admin\FieldDescriptionInterface
+    public function offsetGet($offset): FieldDescriptionInterface
     {
         return $this->get($offset);
     }

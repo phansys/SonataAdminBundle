@@ -180,7 +180,7 @@ interface FieldDescriptionInterface
     /**
      * @return AdminInterface the admin class linked to this FieldDescription
      */
-    public function getAdmin(): \Sonata\AdminBundle\Admin\AdminInterface;
+    public function getAdmin(): AdminInterface;
 
     /**
      * merge option values related to the provided option name.

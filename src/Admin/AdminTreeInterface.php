@@ -23,7 +23,7 @@ interface AdminTreeInterface
      *
      * @return AdminInterface
      */
-    public function getRootAncestor(): \Sonata\AdminBundle\Admin\AdminInterface;
+    public function getRootAncestor(): AdminInterface;
 
     /**
      * Returns the depth of the admin.
@@ -34,8 +34,6 @@ interface AdminTreeInterface
     /**
      * Returns the current leaf child admin instance,
      * or null if there's no current child.
-     *
-     * @return AdminInterface|null
      */
-    public function getCurrentLeafChildAdmin(): ?\Sonata\AdminBundle\Admin\AdminInterface;
+    public function getCurrentLeafChildAdmin(): ?AdminInterface;
 }
